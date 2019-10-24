@@ -1,0 +1,2 @@
+include ':app', ':SmartWatch'
+rootProject.name='Smartwatch'
