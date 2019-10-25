@@ -30,4 +30,8 @@
     <string name="proper_email">Please enter a proper email</string>
     <string name="username_java">username</string>
     <string name="password_java">password</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="warning">Warning</string>
+    <string name="err_yes">Are you sure you want to leave the app?</string>
 </resources>

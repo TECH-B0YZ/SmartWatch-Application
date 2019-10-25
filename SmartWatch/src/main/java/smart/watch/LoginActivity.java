@@ -1,6 +1,9 @@
 package smart.watch;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Context context=this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +51,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(user_info);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle(getString(R.string.warning));
+        alertDialogBuilder
+                .setMessage(getString(R.string.err_yes))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) { dialog.cancel();}
+                });
+        alertDialogBuilder.show();
     }
 }
