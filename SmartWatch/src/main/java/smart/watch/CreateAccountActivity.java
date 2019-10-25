@@ -46,7 +46,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
 
-        if(usernameValidate() && passwordValidate() && isValidEmail()) {
+        if(usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
             switch (v.getId()) {
                 case R.id.create_btn:
                     Intent create_intent = new Intent(this, LoginActivity.class);

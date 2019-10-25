@@ -22,4 +22,19 @@
     <string name="menu_send">Envoyer</string>
     <string name="action_help">Aidez-moi</string>
     <string name="create_your_account">Créez votre compte</string>
+    <string name="pfp_selection">Select your profile picture!</string>
+    <string name="error">Something is wrong</string>
+    <string name="error_empty">This field can\'t be empty</string>
+    <string name="too_long">Field is too long</string>
+    <string name="too_short">Field is too short</string>
+    <string name="proper_email">Please enter a proper email</string>
+    <string name="username_java">username</string>
+    <string name="password_java">password</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="warning">Warning</string>
+    <string name="err_yes">Are you sure you want to leave the app?</string>
+    <string name="re_enter_password">Re-enter password</string>
+    <string name="not_equal">This field isn\'t equal to the above one</string>
+    <string name="placeholder_for_user_image">Placeholder for user image</string>
 </resources>
