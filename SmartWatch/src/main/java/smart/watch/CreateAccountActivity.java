@@ -56,7 +56,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     public boolean usernameValidate(){
-        et1=(EditText)findViewById(R.id.create_username);
+        et1=findViewById(R.id.create_username);
         String user = et1.getText().toString();
 
         if(user.isEmpty()){
@@ -78,7 +78,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     public boolean passwordValidate(){
-        et2=(EditText)findViewById(R.id.create_password);
+        et2=findViewById(R.id.create_password);
         String pass = et2.getText().toString();
 
         if(pass.isEmpty()){
@@ -96,7 +96,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     public boolean isValidEmail() {
-        et3=(EditText)findViewById(R.id.create_email);
+        et3=findViewById(R.id.create_email);
         email= et3.getText().toString();
 
         if(email.isEmpty()){
