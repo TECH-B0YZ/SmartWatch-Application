@@ -97,14 +97,15 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
     public boolean isValidEmail() {
         et3=findViewById(R.id.create_email);
-        email= et3.getText().toString();
+        email= et3.getText().toString().trim();
 
         if(email.isEmpty()){
             et3.setError(getString(R.string.error_empty));
             return false;
         }
-        else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            return true;
+        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            et3.setError("Please enter a proper email.");
+            return false;
         }
         else{
             et3.setError(null);
