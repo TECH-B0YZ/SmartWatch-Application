@@ -38,6 +38,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:backgroundTint="#7f8280"
+            android:onClick="onClickPic"
+            android:contentDescription="@string/placeholder_for_pic"
             app:srcCompat="@drawable/ic_profile_pic" />
 
         <EditText
@@ -48,7 +50,8 @@
             android:layout_marginTop="60dp"
             android:ems="10"
             android:hint="@string/username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:importantForAutofill="no"/>
 
         <EditText
             android:id="@+id/create_email"
@@ -57,7 +60,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:importantForAutofill="no"/>
 
         <EditText
             android:id="@+id/create_password"
@@ -66,7 +70,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/confirm_password"
@@ -75,7 +80,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/confirm_password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:importantForAutofill="no"/>
 
         <Button
             android:id="@+id/create_btn"
@@ -84,7 +90,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:backgroundTint="#7f8280"
-            android:text="@string/create_account" />
+            android:text="@string/create_account"
+            android:onClick="onClickValidation"/>
 
     </LinearLayout>
 

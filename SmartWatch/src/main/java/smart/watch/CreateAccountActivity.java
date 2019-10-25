@@ -15,7 +15,6 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -24,23 +23,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
-public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateAccountActivity extends AppCompatActivity{
     EditText et1, et2, et3, et4;
     String email, pass, repass, user;
 
     ImageButton image_button;
-    private int REQUEST_CODE = 1;
+
+    int REQUEST_CODE =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-
-        Button create_button = findViewById(R.id.create_btn);
-        create_button.setOnClickListener(this);
-
-        ImageButton image_button = findViewById(R.id.profilepic_btn);
-        image_button.setOnClickListener(this);
     }
 
     @Override
@@ -50,23 +44,12 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
+    public void onClickValidation(View v) {
 
         if (usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
-            switch (v.getId()) {
-                case R.id.create_btn:
                     Intent create_intent = new Intent(this, LoginActivity.class);
                     startActivity(create_intent);
-                    break;
-                case R.id.profilepic_btn:
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent.createChooser(intent, "Select Picture"), REQUEST_CODE);
-                    break;
-            }
-        } else
+        }else
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
     }
 
@@ -153,4 +136,17 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             return true;
         }
     }
+
+    public void onClickPic(View v){
+        image_button = findViewById(R.id.profilepic_btn);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE);
+    }
+
+
+//    public boolean picValidation(){
+//
+//    }
 }

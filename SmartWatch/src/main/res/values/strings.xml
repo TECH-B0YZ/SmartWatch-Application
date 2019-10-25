@@ -37,4 +37,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="not_equal">This field isn\'t equal to the above one</string>
     <string name="placeholder_for_user_image">Placeholder for user image</string>
+    <string name="placeholder_for_pic">Placeholder for pic</string>
 </resources>
