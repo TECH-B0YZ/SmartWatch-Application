@@ -46,18 +46,6 @@
         app:layout_constraintTop_toBottomOf="@+id/create_password"
         app:layout_constraintVertical_bias="0.019" />
 
-    <EditText
-        android:id="@+id/create_birthdate"
-        android:layout_width="259dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:hint="@string/birth_date"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_email"
-        app:layout_constraintVertical_bias="0.019" />
 
     <Button
         android:id="@+id/create_btn"
@@ -66,10 +54,9 @@
         android:backgroundTint="#7f8280"
         android:text="@string/create_account"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/create_birthdate"
-        app:layout_constraintStart_toStartOf="@+id/create_birthdate"
-        app:layout_constraintTop_toBottomOf="@+id/create_birthdate"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintEnd_toEndOf="@+id/create_email"
+        app:layout_constraintStart_toStartOf="@+id/create_email"
+        app:layout_constraintTop_toBottomOf="@+id/create_email" />
 
     <TextView
         android:id="@+id/create_textview"

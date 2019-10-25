@@ -3,6 +3,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -12,12 +14,16 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener  {
-    EditText et1,et2;
+    EditText et1,et2,et3;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        et3=(EditText)findViewById(R.id.create_email);
+        email=et3.getText().toString();
 
         Button create_button = findViewById(R.id.create_btn);
         create_button.setOnClickListener(this);
@@ -36,7 +42,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
 
-        if(usernameValidate() && passwordValidate()) {
+        if(usernameValidate() && passwordValidate() && isValidEmail(email)) {
             switch (v.getId()) {
                 case R.id.create_btn:
                     Intent create_intent = new Intent(this, LoginActivity.class);
@@ -87,5 +93,9 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             et2.setError(null);
             return true;
         }
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }
