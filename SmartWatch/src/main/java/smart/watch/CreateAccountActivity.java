@@ -147,6 +147,13 @@ public class CreateAccountActivity extends AppCompatActivity{
 
 
 //    public boolean picValidation(){
+//        image_button = findViewById(R.id.profilepic_btn);
 //
+//        if(!image_button.isSelected()){
+//            Toast.makeText(getApplicationContext(),"No pic is selected",Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        else
+//            return true;
 //    }
 }
