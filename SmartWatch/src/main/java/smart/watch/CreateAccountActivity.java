@@ -7,10 +7,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener  {
+    EditText et1,et2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +35,57 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     }
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.create_btn:
-                Intent create_intent = new Intent(this,LoginActivity.class);
-                startActivity(create_intent);
-                break;
-            case R.id.profilepic_btn:
-                Toast.makeText(this,"Select your profile picture!",Toast.LENGTH_SHORT).show();
-                break;
+
+        if(usernameValidate() && passwordValidate()) {
+            switch (v.getId()) {
+                case R.id.create_btn:
+                    Intent create_intent = new Intent(this, LoginActivity.class);
+                    startActivity(create_intent);
+                    break;
+                case R.id.profilepic_btn:
+                    Toast.makeText(this, "Select your profile picture!", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    }
+
+    public boolean usernameValidate(){
+        et1=(EditText)findViewById(R.id.create_username);
+        String user = et1.getText().toString();
+
+        if(user.isEmpty()){
+            et1.setError("This field can't be empty");
+            return false;
+        }
+        else if(user.length() > 10){
+            et1.setError("Field is too long");
+            return false;
+        }
+        else if(user.length() < 3){
+            et1.setError("Field is too short");
+            return false;
+        }
+        else {
+            et1.setError(null);
+            return true;
+        }
+    }
+
+    public boolean passwordValidate(){
+        et2=(EditText)findViewById(R.id.create_password);
+        String pass = et2.getText().toString();
+
+        if(pass.isEmpty()){
+            et2.setError("This field can't be empty");
+            return false;
+        }
+        else if(pass.length() < 3){
+            et2.setError("Field is too short");
+            return false;
+        }
+        else {
+            et2.setError(null);
+            return true;
         }
     }
 }
