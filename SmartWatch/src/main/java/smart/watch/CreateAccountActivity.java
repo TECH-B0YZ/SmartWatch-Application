@@ -20,7 +20,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener  {
-    EditText et1,et2,et3;
+    EditText et1,et2,et3,et4;
     String email;
 
     @Override
@@ -115,6 +115,24 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         }
         else{
             et3.setError(null);
+            return true;
+        }
+    }
+
+    public boolean rePasswordValidate(){
+        et4=findViewById(R.id.create_reenter);
+        String repass = et4.getText().toString();
+
+        if(repass.isEmpty()){
+            et4.setError(getString(R.string.error_empty));
+            return false;
+        }
+        else if(!repass.equals(email)){
+            et4.setError(getString(R.string.not_equal));
+            return false;
+        }
+        else{
+            et4.setError(null);
             return true;
         }
     }

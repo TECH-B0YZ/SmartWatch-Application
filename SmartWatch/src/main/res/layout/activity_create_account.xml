@@ -84,7 +84,7 @@
         app:srcCompat="@drawable/ic_profile_pic" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/create_reenter"
         android:layout_width="259dp"
         android:layout_height="43dp"
         android:layout_marginStart="76dp"
