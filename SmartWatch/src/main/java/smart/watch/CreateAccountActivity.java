@@ -5,11 +5,12 @@
  */
 
 package smart.watch;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,9 +20,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener  {
-    EditText et1,et2,et3,et4;
-    String email,pass,repass,user;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+
+public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener {
+    EditText et1, et2, et3, et4;
+    String email, pass, repass, user;
+
+    ImageButton image_button;
+    private int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +41,8 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
         ImageButton image_button = findViewById(R.id.profilepic_btn);
         image_button.setOnClickListener(this);
-
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -46,92 +53,102 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
 
-        if(usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
+        if (usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
             switch (v.getId()) {
                 case R.id.create_btn:
                     Intent create_intent = new Intent(this, LoginActivity.class);
                     startActivity(create_intent);
                     break;
                 case R.id.profilepic_btn:
-                    Toast.makeText(this, R.string.pfp_selection, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent.createChooser(intent, "Select Picture"), REQUEST_CODE);
                     break;
             }
-        }
-        else
+        } else
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
     }
 
-    public boolean usernameValidate(){
-        et1=findViewById(R.id.create_username);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null
+                && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                Bitmap resize = Bitmap.createScaledBitmap(bitmap, 500, 500, false);
+                image_button.setImageBitmap(resize);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public boolean usernameValidate() {
+        et1 = findViewById(R.id.create_username);
         user = et1.getText().toString();
 
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             et1.setError(getString(R.string.error_empty));
             return false;
-        }
-        else if(user.length() > 10){
+        } else if (user.length() > 10) {
             et1.setError(getString(R.string.too_long));
             return false;
-        }
-        else if(user.length() < 3){
+        } else if (user.length() < 3) {
             et1.setError(getString(R.string.too_short));
             return false;
-        }
-        else {
+        } else {
             et1.setError(null);
             return true;
         }
     }
 
-    public boolean passwordValidate(){
-        et2=findViewById(R.id.create_password);
+    public boolean passwordValidate() {
+        et2 = findViewById(R.id.create_password);
         pass = et2.getText().toString();
 
-        if(pass.isEmpty()){
+        if (pass.isEmpty()) {
             et2.setError(getString(R.string.error_empty));
             return false;
-        }
-        else if(pass.length() < 3){
+        } else if (pass.length() < 3) {
             et2.setError(getString(R.string.too_short));
             return false;
-        }
-        else {
+        } else {
             et2.setError(null);
             return true;
         }
     }
 
     public boolean isValidEmail() {
-        et3=findViewById(R.id.create_email);
-        email= et3.getText().toString().trim();
+        et3 = findViewById(R.id.create_email);
+        email = et3.getText().toString().trim();
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             et3.setError(getString(R.string.error_empty));
             return false;
-        }
-        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             et3.setError(getString(R.string.proper_email));
             return false;
-        }
-        else{
+        } else {
             et3.setError(null);
             return true;
         }
     }
 
-    public boolean rePasswordValidate(){
-        et4=findViewById(R.id.create_reenter);
+    public boolean rePasswordValidate() {
+        et4 = findViewById(R.id.confirm_password);
         repass = et4.getText().toString();
 
-        if(repass.isEmpty()){
+        if (repass.isEmpty()) {
             et4.setError(getString(R.string.error_empty));
             return false;
-        }
-        else if(!repass.equals(pass)){
+        } else if (!repass.equals(pass)) {
             et4.setError(getString(R.string.not_equal));
             return false;
-        }
-        else{
+        } else {
             et4.setError(null);
             return true;
         }
