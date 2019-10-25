@@ -34,4 +34,5 @@
     <string name="no">No</string>
     <string name="warning">Warning</string>
     <string name="err_yes">Are you sure you want to leave the app?</string>
+    <string name="re_enter_password">Re-enter password</string>
 </resources>
