@@ -1,3 +1,9 @@
+/*
+ * Author: TECHB0YS
+ * Project: SmartWatch
+ *
+ */
+
 package smart.watch;
 import androidx.appcompat.app.AppCompatActivity;
 

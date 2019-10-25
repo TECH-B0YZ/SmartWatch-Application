@@ -1,3 +1,9 @@
+/*
+ * Author: TECHB0YS
+ * Project: SmartWatch
+ *
+ */
+
 package smart.watch;
 import android.os.Bundle;
 import android.view.LayoutInflater;
