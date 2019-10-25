@@ -22,9 +22,6 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        et3=(EditText)findViewById(R.id.create_email);
-        email=et3.getText().toString();
-
         Button create_button = findViewById(R.id.create_btn);
         create_button.setOnClickListener(this);
 
@@ -39,20 +36,23 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     @Override
     public void onClick(View v) {
 
-        if(usernameValidate() && passwordValidate() && isValidEmail(email)) {
+        if(usernameValidate() && passwordValidate() && isValidEmail()) {
             switch (v.getId()) {
                 case R.id.create_btn:
                     Intent create_intent = new Intent(this, LoginActivity.class);
                     startActivity(create_intent);
                     break;
                 case R.id.profilepic_btn:
-                    Toast.makeText(this, "Select your profile picture!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.pfp_selection, Toast.LENGTH_SHORT).show();
                     break;
             }
         }
+        else
+            Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
     }
 
     public boolean usernameValidate(){
@@ -60,15 +60,15 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         String user = et1.getText().toString();
 
         if(user.isEmpty()){
-            et1.setError("This field can't be empty");
+            et1.setError(getString(R.string.error_empty));
             return false;
         }
         else if(user.length() > 10){
-            et1.setError("Field is too long");
+            et1.setError(getString(R.string.too_long));
             return false;
         }
         else if(user.length() < 3){
-            et1.setError("Field is too short");
+            et1.setError(getString(R.string.too_short));
             return false;
         }
         else {
@@ -82,11 +82,11 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         String pass = et2.getText().toString();
 
         if(pass.isEmpty()){
-            et2.setError("This field can't be empty");
+            et2.setError(getString(R.string.error_empty));
             return false;
         }
         else if(pass.length() < 3){
-            et2.setError("Field is too short");
+            et2.setError(getString(R.string.too_short));
             return false;
         }
         else {
@@ -95,7 +95,19 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    public static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    public boolean isValidEmail() {
+        et3=(EditText)findViewById(R.id.create_email);
+        String email= et3.getText().toString();
+        if(email.isEmpty()){
+            et3.setError(getString(R.string.error_empty));
+            return false;
+        }
+        else if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            return true;
+        }
+        else{
+            et3.setError(null);
+            return true;
+        }
     }
 }

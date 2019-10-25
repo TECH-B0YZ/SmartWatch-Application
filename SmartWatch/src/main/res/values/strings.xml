@@ -14,8 +14,6 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="antonio_test">This is to test if the changes work</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -24,4 +22,9 @@
     <string name="menu_send">Send</string>
     <string name="action_help">Help</string>
     <string name="create_your_account">Create your account</string>
+    <string name="pfp_selection">Select your profile picture!</string>
+    <string name="error">Something is wrong</string>
+    <string name="error_empty">This field can\'t be empty</string>
+    <string name="too_long">Field is too long</string>
+    <string name="too_short">Field is too short</string>
 </resources>
