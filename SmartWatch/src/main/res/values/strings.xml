@@ -36,4 +36,5 @@
     <string name="err_yes">Are you sure you want to leave the app?</string>
     <string name="re_enter_password">Re-enter password</string>
     <string name="not_equal">This field isn\'t equal to the above one</string>
+    <string name="placeholder_for_user_image">Placeholder for user image</string>
 </resources>

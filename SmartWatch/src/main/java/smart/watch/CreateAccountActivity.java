@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener  {
     EditText et1,et2,et3,et4;
-    String email;
+    String email,pass,repass,user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
     public boolean usernameValidate(){
         et1=findViewById(R.id.create_username);
-        String user = et1.getText().toString();
+        user = et1.getText().toString();
 
         if(user.isEmpty()){
             et1.setError(getString(R.string.error_empty));
@@ -85,7 +85,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
     public boolean passwordValidate(){
         et2=findViewById(R.id.create_password);
-        String pass = et2.getText().toString();
+        pass = et2.getText().toString();
 
         if(pass.isEmpty()){
             et2.setError(getString(R.string.error_empty));
@@ -121,13 +121,13 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
     public boolean rePasswordValidate(){
         et4=findViewById(R.id.create_reenter);
-        String repass = et4.getText().toString();
+        repass = et4.getText().toString();
 
         if(repass.isEmpty()){
             et4.setError(getString(R.string.error_empty));
             return false;
         }
-        else if(!repass.equals(email)){
+        else if(!repass.equals(pass)){
             et4.setError(getString(R.string.not_equal));
             return false;
         }

@@ -14,6 +14,7 @@
         android:ems="10"
         android:hint="@string/username"
         android:inputType="textPersonName"
+        android:importantForAutofill="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/profilepic_btn"
         app:layout_constraintStart_toStartOf="@+id/profilepic_btn"
@@ -27,6 +28,7 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:importantForAutofill="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +40,16 @@
         android:id="@+id/create_email"
         android:layout_width="259dp"
         android:layout_height="43dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="76dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
+        android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/create_reenter" />
 
     <Button
         android:id="@+id/create_btn"
@@ -76,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#7f8280"
+        android:contentDescription="@string/placeholder_for_user_image"
         app:layout_constraintBottom_toTopOf="@+id/create_username"
         app:layout_constraintEnd_toEndOf="@+id/create_textview"
         app:layout_constraintStart_toStartOf="@+id/create_textview"
@@ -93,6 +100,7 @@
         android:ems="10"
         android:hint="@string/re_enter_password"
         android:inputType="textPersonName"
+        android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_password" />
