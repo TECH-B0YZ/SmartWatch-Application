@@ -23,12 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_button.setOnClickListener(this);
 
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu, menu);
-//        return true;
-//    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -44,8 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 EditText username = findViewById(R.id.login_username);
                 EditText password = findViewById(R.id.login_password);
 
-                user_login_id.putCharSequence("username",username.getText());
-                user_login_id.putCharSequence("password",password.getText());
+                user_login_id.putCharSequence(getString(R.string.username_java),username.getText());
+                user_login_id.putCharSequence(getString(R.string.password_java),password.getText());
 
                 user_info.putExtras(user_login_id);
                 startActivity(user_info);

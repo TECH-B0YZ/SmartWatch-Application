@@ -27,4 +27,7 @@
     <string name="error_empty">This field can\'t be empty</string>
     <string name="too_long">Field is too long</string>
     <string name="too_short">Field is too short</string>
+    <string name="proper_email">Please enter a proper email</string>
+    <string name="username_java">username</string>
+    <string name="password_java">password</string>
 </resources>

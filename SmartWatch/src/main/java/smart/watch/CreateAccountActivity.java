@@ -104,7 +104,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             return false;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            et3.setError("Please enter a proper email.");
+            et3.setError(getString(R.string.proper_email));
             return false;
         }
         else{
