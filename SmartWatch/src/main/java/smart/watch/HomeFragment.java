@@ -14,18 +14,27 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 public class HomeFragment  extends Fragment {
+
+    private String usern;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root;
+        root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        Bundle bundle = this.getArguments();
 
-        TextView tv = root.findViewById(R.id.greeting);
-        tv.setText(getString(R.string.hello_home));
-
-
+        if(getArguments()!=null) {
+            usern = bundle.getString("username");
+        }
+        TextView tv;
+        tv = root.findViewById(R.id.greeting);
+        tv.setText(usern);
         return root;
     }
+
 }

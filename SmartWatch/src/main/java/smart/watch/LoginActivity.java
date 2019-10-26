@@ -42,15 +42,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.login_btn:
                 Intent user_info = new Intent(this, HomeActivity.class);
-                Bundle user_login_id = new Bundle();
 
-                EditText username = findViewById(R.id.login_username);
-                EditText password = findViewById(R.id.login_password);
+//                Bundle user_login_id = new Bundle();
+//
+               EditText username = findViewById(R.id.login_username);
+//                EditText password = findViewById(R.id.login_password);
+//
+//                user_login_id.putString("username",username.getText().toString());
+//               // user_login_id.putString(getString(R.string.password_java),password.getText().toString());
+//
+//                HomeFragment obj = new HomeFragment();
+//                obj.setArguments(user_login_id);
 
-                user_login_id.putCharSequence(getString(R.string.username_java),username.getText());
-                user_login_id.putCharSequence(getString(R.string.password_java),password.getText());
-
-                user_info.putExtras(user_login_id);
+                user_info.putExtra("username",username.getText().toString());
                 startActivity(user_info);
                 break;
         }
