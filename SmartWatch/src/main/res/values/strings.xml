@@ -39,4 +39,7 @@
     <string name="placeholder_for_user_image">Placeholder for user image</string>
     <string name="placeholder_for_pic">Placeholder for pic</string>
     <string name="hello_home">Hello,</string>
+    <string name="home">Home</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="pedometer">Pedometer</string>
 </resources>
