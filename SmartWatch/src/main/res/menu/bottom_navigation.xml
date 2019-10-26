@@ -4,16 +4,16 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="@string/home" />
 
     <item
         android:id="@+id/nav_favorites"
         android:icon="@drawable/ic_heart_rate_monitor"
-        android:title="Heart Rate" />
+        android:title="@string/heart_rate" />
 
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/ic_pedometer"
-        android:title="Pedometer" />
+        android:title="@string/pedometer" />
 
 </menu>
