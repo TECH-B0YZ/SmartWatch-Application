@@ -29,15 +29,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Intent intent = getIntent();
-        username=intent.getStringExtra("username");
-
-        Bundle bundle = new Bundle();
-        bundle.putString("username",username);
-
-        HomeFragment obj = new HomeFragment();
-        obj.setArguments(bundle);
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 

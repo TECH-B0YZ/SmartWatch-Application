@@ -23,17 +23,8 @@ public class HomeFragment  extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root;
-        root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Bundle bundle = this.getArguments();
-
-        if(getArguments()!=null) {
-            usern = bundle.getString("username");
-        }
-        TextView tv;
-        tv = root.findViewById(R.id.greeting);
-        tv.setText(usern);
         return root;
     }
 
