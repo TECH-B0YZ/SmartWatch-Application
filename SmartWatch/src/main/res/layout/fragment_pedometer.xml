@@ -92,6 +92,7 @@
                 android:id="@+id/goal_et"
                 android:layout_width="136dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:hint="@string/enter_goal"
                 android:importantForAutofill="no"
                 android:inputType="number" />
