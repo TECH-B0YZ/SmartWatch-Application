@@ -27,12 +27,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
-import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import java.util.Objects;
@@ -44,7 +42,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private boolean running = false;
     private DecoView mDecoView;
     private int mSeries1Index;
-    private final float mSeriesMax = 50f;
     private Handler mHandler = new Handler();
 
     private Runnable runnable = new Runnable() {
@@ -116,7 +113,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             sensorManager.registerListener(this, countSensor,
                     SensorManager.SENSOR_DELAY_UI);
         } else {
-            Toast.makeText(getContext(), "Sensor not found",
+            Toast.makeText(getContext(), getString(R.string.sensor_not_found),
                     Toast.LENGTH_SHORT).show();
         }
     }

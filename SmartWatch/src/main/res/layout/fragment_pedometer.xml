@@ -51,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="steps"
+                        android:text="@string/steps"
                         android:textColor="#000000"
                         android:textSize="11sp" />
 
@@ -62,7 +62,7 @@
                         android:layout_gravity="center_horizontal"
                         android:text="/200"
                         android:textColor="#51000000"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -93,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_goal"
                 android:importantForAutofill="no"
-                android:inputType="number"></EditText>
+                android:inputType="number">
+            </EditText>
 
             <Button
                 android:id="@+id/goal_btn"

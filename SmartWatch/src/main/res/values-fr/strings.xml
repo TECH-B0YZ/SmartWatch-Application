@@ -37,4 +37,14 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="not_equal">This field isn\'t equal to the above one</string>
     <string name="placeholder_for_user_image">Placeholder for user image</string>
+    <string name="placeholder_for_pic">Placeholder for pic</string>
+    <string name="hello_home">Hello,</string>
+    <string name="home">Home</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="pedometer">Pedometer</string>
+    <string name="enter_goal">Enter goal</string>
+    <string name="set_goal">Set Goal</string>
+    <string name="view_graph">View graph</string>
+    <string name="steps">steps</string>
+    <string name="sensor_not_found">Sensor not found</string>
 </resources>

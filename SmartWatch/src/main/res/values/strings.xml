@@ -45,4 +45,6 @@
     <string name="enter_goal">Enter goal</string>
     <string name="set_goal">Set Goal</string>
     <string name="view_graph">View graph</string>
+    <string name="steps">steps</string>
+    <string name="sensor_not_found">Sensor not found</string>
 </resources>
