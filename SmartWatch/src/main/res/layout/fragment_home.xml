@@ -32,14 +32,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/colorWhite"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 
-            <ImageView
+            <ImageButton
+                android:id="@+id/btn_img"
                 android:layout_width="92dp"
                 android:layout_height="50dp"
                 android:layout_gravity="start"
