@@ -42,4 +42,7 @@
     <string name="home">Home</string>
     <string name="heart_rate">Heart Rate</string>
     <string name="pedometer">Pedometer</string>
+    <string name="enter_goal">Enter goal</string>
+    <string name="set_goal">Set Goal</string>
+    <string name="view_graph">View graph</string>
 </resources>

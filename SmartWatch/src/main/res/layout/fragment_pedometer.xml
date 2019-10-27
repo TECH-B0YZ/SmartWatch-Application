@@ -85,8 +85,44 @@
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
             app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"></androidx.cardview.widget.CardView>
+            app:cardUseCompatPadding="true">
 
+            <EditText
+                android:id="@+id/goal_et"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_goal"
+                android:importantForAutofill="no"
+                android:inputType="number"></EditText>
+
+            <Button
+                android:id="@+id/goal_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/set_goal"
+                android:layout_gravity="center">
+            </Button>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <Button
+                android:id="@+id/graph_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/view_graph"
+                >
+
+            </Button>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 

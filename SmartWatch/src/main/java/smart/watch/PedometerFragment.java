@@ -6,6 +6,7 @@
 
 package smart.watch;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -19,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +39,7 @@ import java.util.Objects;
 
 public class PedometerFragment extends Fragment implements SensorEventListener {
 
-    private TextView tv_steps;
+    private TextView tv_steps,tv_goal;
     private SensorManager sensorManager;
     private boolean running = false;
     private DecoView mDecoView;
@@ -44,7 +47,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private final float mSeriesMax = 50f;
     private Handler mHandler = new Handler();
 
-    Runnable runnable = new Runnable() {
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             update();
@@ -52,12 +55,14 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         }
     };
     private float newPosition;
+    private EditText et;
+    private float goal =200;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_pedometer, container, false);
+        final View root = inflater.inflate(R.layout.fragment_pedometer, container, false);
         tv_steps = root.findViewById(R.id.steps);
         sensorManager = (SensorManager)
                 Objects.requireNonNull(getActivity()).getSystemService(Context.SENSOR_SERVICE);
@@ -65,6 +70,31 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         createDataSeries1();
         // Start the timer
         mHandler.post(runnable);
+
+        Button btn1 = root.findViewById(R.id.goal_btn);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void onClick(View v) {
+                et = root.findViewById(R.id.goal_et);
+                goal = Float.valueOf(et.getText().toString());
+                tv_goal = root.findViewById(R.id.steps_goal);
+                tv_goal.setText(String.format("/%d", (int) goal));
+                createDataSeries1();
+                mHandler.post(runnable);
+
+            }
+        });
+
+        Button btn2 = root.findViewById(R.id.graph_btn);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Here we will use the button to view a graph that will display the growth
+                // of steps over a period of time
+            }
+        });
+
         return root;
     }
 
@@ -103,7 +133,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
 
     private void createDataSeries1() {
         SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 0, 255, 0))
-                .setRange(0, 200, 0)
+                .setRange(0, goal, 0)
                 .setInitialVisibility(false)
                 .setLineWidth(32f)
                 .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_OUTER,
@@ -124,4 +154,5 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         mDecoView.addEvent(new
                 DecoEvent.Builder(newPosition).setIndex(mSeries1Index).build());
     }
+
 }
