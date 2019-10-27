@@ -47,4 +47,8 @@
     <string name="view_graph">View graph</string>
     <string name="steps">steps</string>
     <string name="sensor_not_found">Sensor not found</string>
+    <string name="hello_xyz">Hello, XYZ</string>
+    <string name="bluetooth">bluetooth</string>
+    <string name="turn_on">Turn ON</string>
+    <string name="turn_off">Turn OFF</string>
 </resources>

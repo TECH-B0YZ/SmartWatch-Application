@@ -17,6 +17,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             app:cardBackgroundColor="@color/colorWhite"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
@@ -93,8 +94,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_goal"
                 android:importantForAutofill="no"
-                android:inputType="number">
-            </EditText>
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/goal_btn"
@@ -102,8 +102,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/set_goal"
-                android:layout_gravity="center">
-            </Button>
+                android:layout_gravity="center" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -119,10 +118,7 @@
                 android:id="@+id/graph_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/view_graph"
-                >
-
-            </Button>
+                android:text="@string/view_graph" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
