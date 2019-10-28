@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,22 +20,45 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class CreateAccountActivity extends AppCompatActivity{
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CreateAccountActivity extends AppCompatActivity {
     EditText et1, et2, et3, et4;
     String email, pass, repass, user;
-
     ImageButton image_button;
 
-    int REQUEST_CODE =1;
+    int REQUEST_CODE = 1;
+
+    private static final String TAG = "CreateAccountActivity";
+
+    private static final String KEY_NAME = "name";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        et1 = findViewById(R.id.create_username);
+        et2 = findViewById(R.id.create_password);
+        et3 = findViewById(R.id.create_email);
+    }
+
+    public void saveNote(View v) {
+
     }
 
     @Override
@@ -47,9 +71,33 @@ public class CreateAccountActivity extends AppCompatActivity{
     public void onClickValidation(View v) {
 
         if (usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
-                    Intent create_intent = new Intent(this, LoginActivity.class);
-                    startActivity(create_intent);
-        }else
+            String userName = et1.getText().toString();
+            String email = et3.getText().toString();
+            String password = et2.getText().toString();
+
+            CollectionReference loginData = db.collection("Login Data");
+            Map<String, Object> note = new HashMap<>();
+            note.put(KEY_NAME, userName);
+            note.put(KEY_EMAIL, email);
+            note.put(KEY_PASSWORD, password);
+
+            loginData.document(userName).set(note)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(CreateAccountActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
+                            Intent create_intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                            startActivity(create_intent);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CreateAccountActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, e.toString());
+                        }
+                    });
+        } else
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
     }
 
@@ -71,13 +119,12 @@ public class CreateAccountActivity extends AppCompatActivity{
     }
 
     public boolean usernameValidate() {
-        et1 = findViewById(R.id.create_username);
         user = et1.getText().toString();
 
         if (user.isEmpty()) {
             et1.setError(getString(R.string.error_empty));
             return false;
-        } else if (user.length() > 10) {
+        } else if (user.length() > 25) {
             et1.setError(getString(R.string.too_long));
             return false;
         } else if (user.length() < 3) {
@@ -90,7 +137,6 @@ public class CreateAccountActivity extends AppCompatActivity{
     }
 
     public boolean passwordValidate() {
-        et2 = findViewById(R.id.create_password);
         pass = et2.getText().toString();
 
         if (pass.isEmpty()) {
@@ -106,7 +152,6 @@ public class CreateAccountActivity extends AppCompatActivity{
     }
 
     public boolean isValidEmail() {
-        et3 = findViewById(R.id.create_email);
         email = et3.getText().toString().trim();
 
         if (email.isEmpty()) {
@@ -137,23 +182,11 @@ public class CreateAccountActivity extends AppCompatActivity{
         }
     }
 
-    public void onClickPic(View v){
+    public void onClickPic(View v) {
         image_button = findViewById(R.id.profilepic_btn);
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE);
     }
-
-
-//    public boolean picValidation(){
-//        image_button = findViewById(R.id.profilepic_btn);
-//
-//        if(!image_button.isSelected()){
-//            Toast.makeText(getApplicationContext(),"No pic is selected",Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        else
-//            return true;
-//    }
 }
