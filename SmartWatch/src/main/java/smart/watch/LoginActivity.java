@@ -70,49 +70,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final String userName = userNameEditText.getText().toString();
                 final String userPassword = passwordEditText.getText().toString();
 
-                DocumentReference docRef = db.collection("Login Data").document(userName);
-                docRef.get()
-                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                if (documentSnapshot.exists()) {
-                                    String name = documentSnapshot.getString(KEY_NAME);
-                                    String password = documentSnapshot.getString(KEY_PASSWORD);
+                try {
+                    DocumentReference docRef = db.collection("Login Data").document(userName);
+                    docRef.get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    if (documentSnapshot.exists()) {
+                                        String name = documentSnapshot.getString(KEY_NAME);
+                                        String password = documentSnapshot.getString(KEY_PASSWORD);
 
-                                    assert name != null;
-                                    assert password != null;
-                                    if (name.equals(userName) && password.equals(userPassword)) {
-                                        dialog.setTitle("Logging in");
-                                        dialog.setMessage("Checking user credentials...");
-                                        dialog.show();
+                                        if (!password.equals(userPassword)) {
+                                            Toast.makeText(LoginActivity.this, "Password incorrect!", Toast.LENGTH_SHORT).show();
+                                        }
 
-                                        new CountDownTimer(3000, 1000) {
+                                        if ((name.equals(userName) && password.equals(userPassword))) {
+                                            dialog.setTitle("Logging in");
+                                            dialog.setMessage("Checking user credentials...");
+                                            dialog.show();
 
-                                            public void onTick(long millisUntilFinished) {
-                                                // You don't need anything here
-                                            }
+                                            new CountDownTimer(3000, 1000) {
 
-                                            public void onFinish() {
-                                                dialog.dismiss();
-                                                Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                                startActivity(loginIntent);
-                                            }
-                                        }.start();
+                                                public void onTick(long millisUntilFinished) {
+                                                    // You don't need anything here
+                                                }
+
+                                                public void onFinish() {
+                                                    dialog.dismiss();
+                                                    Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                    startActivity(loginIntent);
+                                                }
+                                            }.start();
+                                        }
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
                                     }
-
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, e.toString());
-                            }
-                        });
-                break;
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, e.toString());
+                                }
+                            });
+                    break;
+                } catch (IllegalArgumentException e) {
+                    Log.d(TAG, e.toString());
+                }
         }
     }
 
