@@ -15,6 +15,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".HomeActivity" />
         <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".HomeActivity">
+        </activity>
+
+        <activity
             android:name=".CreateAccountActivity"
             android:parentActivityName=".LoginActivity" />
         <activity
