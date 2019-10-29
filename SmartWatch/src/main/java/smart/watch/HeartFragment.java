@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,16 +20,22 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.Random;
+
 public class HeartFragment extends Fragment {
 
     private View layoutHB;
     private ImageView heartImage, heartBeat, heartBeat1;
     private Handler handlerAnimationCIMG;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_heart, container, false);
+
+        //final TextView hb = (TextView)root.findViewById(R.id.textView5);
+        final int random = new Random().nextInt(12) + 80;
 
         this.handlerAnimationCIMG = new Handler();
         this.layoutHB = root.findViewById(R.id.layoutBeat);
@@ -45,6 +52,9 @@ public class HeartFragment extends Fragment {
 
                 startTask();
 
+                    //hb.setText(String.valueOf(random));
+
+
             }
         });
         root.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
@@ -52,6 +62,7 @@ public class HeartFragment extends Fragment {
             public void onClick(View view) {
 
                 stopTask();
+                //hb.setText("0");
 
             }
         });
