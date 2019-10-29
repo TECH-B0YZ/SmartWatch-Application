@@ -130,7 +130,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (user.length() < 3) {
             et1.setError(getString(R.string.too_short));
             return false;
-        } else {
+        } else if (user.contains(" ")){
+            et1.setError(getString(R.string.space));
+            return false;
+        }  else {
             et1.setError(null);
             return true;
         }
@@ -144,6 +147,9 @@ public class CreateAccountActivity extends AppCompatActivity {
             return false;
         } else if (pass.length() < 3) {
             et2.setError(getString(R.string.too_short));
+            return false;
+        } else if (pass.contains(" ")){
+            et2.setError(getString(R.string.space));
             return false;
         } else {
             et2.setError(null);
@@ -160,7 +166,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             et3.setError(getString(R.string.proper_email));
             return false;
-        } else {
+        }else if (email.contains(" ")){
+            et3.setError(getString(R.string.space));
+            return false;
+        }  else {
             et3.setError(null);
             return true;
         }
@@ -176,7 +185,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (!repass.equals(pass)) {
             et4.setError(getString(R.string.not_equal));
             return false;
-        } else {
+        }else if (repass.contains(" ")){
+            et4.setError(getString(R.string.space));
+            return false;
+        }  else {
             et4.setError(null);
             return true;
         }

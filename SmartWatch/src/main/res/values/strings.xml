@@ -51,4 +51,5 @@
     <string name="bluetooth">bluetooth</string>
     <string name="turn_on">Turn ON</string>
     <string name="turn_off">Turn OFF</string>
+    <string name="space">Field cannot take spaces</string>
 </resources>

@@ -16,6 +16,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,13 +74,13 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View v) {
-                et = root.findViewById(R.id.goal_et);
-                goal = Float.valueOf(et.getText().toString());
-                tv_goal = root.findViewById(R.id.steps_goal);
-                tv_goal.setText(String.format("/%d", (int) goal));
-                createDataSeries1();
-                mHandler.post(runnable);
-
+                try {
+                    et = root.findViewById(R.id.goal_et);
+                    goal = Float.valueOf(et.getText().toString());
+                    tv_goal = root.findViewById(R.id.steps_goal);
+                    tv_goal.setText(String.format("/%d", (int) goal));
+                }catch(IllegalArgumentException e){
+                }
             }
         });
 
