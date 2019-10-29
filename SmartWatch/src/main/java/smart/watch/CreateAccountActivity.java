@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
@@ -41,6 +43,8 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateAccountActivity";
 
+    private static String name;
+    private static String nameCheck;
     private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
@@ -55,10 +59,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         et1 = findViewById(R.id.create_username);
         et2 = findViewById(R.id.create_password);
         et3 = findViewById(R.id.create_email);
-    }
-
-    public void saveNote(View v) {
-
     }
 
     @Override
@@ -101,6 +101,14 @@ public class CreateAccountActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
     }
 
+    public void onClickPic(View v) {
+        image_button = findViewById(R.id.profilepic_btn);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -130,10 +138,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (user.length() < 3) {
             et1.setError(getString(R.string.too_short));
             return false;
-        } else if (user.contains(" ")){
+        } else if (user.contains(" ")) {
             et1.setError(getString(R.string.space));
             return false;
-        }  else {
+        } else if (user.equals(userNameCheck())) {
+            et1.setError(getString(R.string.username_taken));
+            return false;
+        } else {
             et1.setError(null);
             return true;
         }
@@ -148,7 +159,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (pass.length() < 3) {
             et2.setError(getString(R.string.too_short));
             return false;
-        } else if (pass.contains(" ")){
+        } else if (pass.contains(" ")) {
             et2.setError(getString(R.string.space));
             return false;
         } else {
@@ -166,10 +177,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             et3.setError(getString(R.string.proper_email));
             return false;
-        }else if (email.contains(" ")){
+        } else if (email.contains(" ")) {
             et3.setError(getString(R.string.space));
             return false;
-        }  else {
+        } else {
             et3.setError(null);
             return true;
         }
@@ -185,20 +196,36 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (!repass.equals(pass)) {
             et4.setError(getString(R.string.not_equal));
             return false;
-        }else if (repass.contains(" ")){
+        } else if (repass.contains(" ")) {
             et4.setError(getString(R.string.space));
             return false;
-        }  else {
+        } else {
             et4.setError(null);
             return true;
         }
     }
 
-    public void onClickPic(View v) {
-        image_button = findViewById(R.id.profilepic_btn);
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE);
+    public String userNameCheck() {
+        String userName = et1.getText().toString();
+
+        DocumentReference docRef = db.collection("Login Data").document(userName);
+        docRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            name = documentSnapshot.getString(KEY_NAME);
+                            nameCheck = name;
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CreateAccountActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, e.toString());
+                    }
+                });
+        return nameCheck;
     }
 }

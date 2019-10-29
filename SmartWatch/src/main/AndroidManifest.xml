@@ -13,12 +13,17 @@
         android:roundIcon="@mipmap/smart_icon_home"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".CreateAccountActivity" android:parentActivityName=".LoginActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".HomeActivity" />
+        <activity
+            android:name=".CreateAccountActivity"
+            android:parentActivityName=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

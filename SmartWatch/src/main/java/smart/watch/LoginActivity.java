@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordEditText = findViewById(R.id.login_password);
 
         dialog = new ProgressDialog(LoginActivity.this);
-
     }
 
     @Override
@@ -85,8 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         }
 
                                         if ((name.equals(userName) && password.equals(userPassword))) {
-                                            dialog.setTitle("Logging in");
-                                            dialog.setMessage("Checking user credentials...");
+                                            dialog.setMessage("Authenticating...");
                                             dialog.show();
 
                                             new CountDownTimer(3000, 1000) {

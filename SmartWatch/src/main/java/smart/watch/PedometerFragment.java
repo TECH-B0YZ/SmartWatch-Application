@@ -38,12 +38,18 @@ import java.util.Objects;
 
 public class PedometerFragment extends Fragment implements SensorEventListener {
 
-    private TextView tv_steps,tv_goal;
+    private TextView tv_steps, tv_goal;
+    private EditText et;
     private SensorManager sensorManager;
-    private boolean running = false;
     private DecoView mDecoView;
-    private int mSeries1Index;
     private Handler mHandler = new Handler();
+
+    private boolean running = false;
+    private float goal = 200;
+    private int mSeries1Index;
+    private float newPosition;
+
+    private static final String TAG = "PedometerFragment";
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -52,9 +58,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             mHandler.postDelayed(this, 1000);
         }
     };
-    private float newPosition;
-    private EditText et;
-    private float goal =200;
 
     @Nullable
     @Override
@@ -79,7 +82,8 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                     goal = Float.valueOf(et.getText().toString());
                     tv_goal = root.findViewById(R.id.steps_goal);
                     tv_goal.setText(String.format("/%d", (int) goal));
-                }catch(IllegalArgumentException e){
+                } catch (IllegalArgumentException e) {
+                    Log.d(TAG, e.toString());
                 }
             }
         });
@@ -135,7 +139,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                 .setInitialVisibility(false)
                 .setLineWidth(32f)
                 .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_OUTER,
-                        Color.parseColor("#22000000"),0.4f))
+                        Color.parseColor("#22000000"), 0.4f))
                 .setInterpolator(new OvershootInterpolator())
                 .setShowPointWhenEmpty(false)
                 .setCapRounded(false)
