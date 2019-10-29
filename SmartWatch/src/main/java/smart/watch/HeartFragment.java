@@ -55,19 +55,6 @@ public class HeartFragment extends Fragment {
 
             }
         });
-
-//        layoutHB.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean hasFocus) {
-//                if (hasFocus) {
-//                    Toast.makeText(getContext(), "Got the focus", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(getContext(), "Lost the focus", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-
-
         return root;
     }
 
