@@ -11,11 +11,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -33,21 +36,26 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CreateAccountActivity extends AppCompatActivity {
     EditText et1, et2, et3, et4;
     String email, pass, repass, user;
     ImageButton image_button;
+    Button createUser;
 
     int REQUEST_CODE = 1;
 
     private static final String TAG = "CreateAccountActivity";
 
     private static String name;
-    private static String nameCheck;
     private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
+
+    private Timer timer = new Timer();
+    private final long DELAY = 1000;
 
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -59,6 +67,38 @@ public class CreateAccountActivity extends AppCompatActivity {
         et1 = findViewById(R.id.create_username);
         et2 = findViewById(R.id.create_password);
         et3 = findViewById(R.id.create_email);
+
+        createUser = findViewById(R.id.create_btn);
+
+        et1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                createUser.setEnabled(false);
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence s, int start, int before,
+                                      int count) {
+                if (timer != null)
+                    timer.cancel();
+            }
+
+            @Override
+            public void afterTextChanged(final Editable s) {
+                if (s.length() >= 3) {
+
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            userNameCheck();
+                        }
+
+                    }, DELAY);
+                }
+            }
+        });
     }
 
     @Override
@@ -69,36 +109,39 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public void onClickValidation(View v) {
+        if (createUser.isEnabled()) {
+            if (usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
 
-        if (usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
-            String userName = et1.getText().toString();
-            String email = et3.getText().toString();
-            String password = et2.getText().toString();
+                String userName = et1.getText().toString();
+                String email = et3.getText().toString();
+                String password = et2.getText().toString();
 
-            CollectionReference loginData = db.collection("Login Data");
-            Map<String, Object> note = new HashMap<>();
-            note.put(KEY_NAME, userName);
-            note.put(KEY_EMAIL, email);
-            note.put(KEY_PASSWORD, password);
+                CollectionReference loginData = db.collection("Login Data");
+                Map<String, Object> note = new HashMap<>();
+                note.put(KEY_NAME, userName);
+                note.put(KEY_EMAIL, email);
+                note.put(KEY_PASSWORD, password);
 
-            loginData.document(userName).set(note)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(CreateAccountActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
-                            Intent create_intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
-                            startActivity(create_intent);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(CreateAccountActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, e.toString());
-                        }
-                    });
+                loginData.document(userName).set(note)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(CreateAccountActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
+                                Intent create_intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                                startActivity(create_intent);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(CreateAccountActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, e.toString());
+                            }
+                        });
+            } else
+                Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
         } else
-            Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            et1.setError(getString(R.string.username_taken));
     }
 
     public void onClickPic(View v) {
@@ -140,9 +183,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             return false;
         } else if (user.contains(" ")) {
             et1.setError(getString(R.string.space));
-            return false;
-        } else if (user.equals(userNameCheck())) {
-            et1.setError(getString(R.string.username_taken));
             return false;
         } else {
             et1.setError(null);
@@ -205,7 +245,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
-    public String userNameCheck() {
+    public void userNameCheck() {
         String userName = et1.getText().toString();
 
         DocumentReference docRef = db.collection("Login Data").document(userName);
@@ -214,8 +254,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            name = documentSnapshot.getString(KEY_NAME);
-                            nameCheck = name;
+                            et1.setError(getString(R.string.username_taken));
+                            createUser.setEnabled(false);
+                        } else {
+                            createUser.setEnabled(true);
                         }
                     }
                 })
@@ -226,6 +268,5 @@ public class CreateAccountActivity extends AppCompatActivity {
                         Log.d(TAG, e.toString());
                     }
                 });
-        return nameCheck;
     }
 }
