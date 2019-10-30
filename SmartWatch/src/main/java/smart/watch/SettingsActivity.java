@@ -9,20 +9,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class SettingsActivity extends AppCompatActivity {
 
     Switch bluetoothOnOff = null;
     private BluetoothAdapter bluetoothadapter;
+    private Toolbar mTopToolbar;
+    TextView bluetoothState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_settings);
 
+        mTopToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(mTopToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        bluetoothState = findViewById(R.id.textView4);
         bluetoothOnOff = findViewById(R.id.switch1);
         bluetoothadapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -31,8 +41,10 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     BluetoothEnable();
+                    bluetoothState.setText("On");
                 } else {
                     BluetoothDisable();
+                    bluetoothState.setText("Off");
                 }
             }
         });

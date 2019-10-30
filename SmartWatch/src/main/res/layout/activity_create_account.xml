@@ -6,30 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".CreateAccountActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        style="@style/HeaderBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Create Account"
+        app:titleTextColor="@color/white" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="675dp"
         android:layout_gravity="center"
 
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
         app:layout_constraintVertical_bias="0.585">
-
-        <TextView
-            android:id="@+id/create_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="76dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="76dp"
-            android:text="@string/create_your_account"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <ImageButton
             android:id="@+id/profilepic_btn"
@@ -38,8 +40,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:backgroundTint="#7f8280"
-            android:onClick="onClickPic"
             android:contentDescription="@string/placeholder_for_pic"
+            android:onClick="onClickPic"
             app:srcCompat="@drawable/ic_profile_pic" />
 
         <EditText
@@ -50,8 +52,8 @@
             android:layout_marginTop="60dp"
             android:ems="10"
             android:hint="@string/username"
-            android:inputType="textPersonName"
-            android:importantForAutofill="no"/>
+            android:importantForAutofill="no"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/create_email"
@@ -60,8 +62,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:importantForAutofill="no"/>
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/create_password"
@@ -70,8 +72,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/confirm_password"
@@ -80,8 +82,8 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/confirm_password"
-            android:inputType="textPassword"
-            android:importantForAutofill="no"/>
+            android:importantForAutofill="no"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/create_btn"
@@ -90,8 +92,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:backgroundTint="#7f8280"
-            android:text="@string/create_account"
-            android:onClick="onClickValidation"/>
+            android:onClick="onClickValidation"
+            android:text="@string/create_account" />
 
     </LinearLayout>
 

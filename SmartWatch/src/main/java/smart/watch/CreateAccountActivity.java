@@ -6,17 +6,17 @@
 
 package smart.watch;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,11 +46,14 @@ public class CreateAccountActivity extends AppCompatActivity {
     ImageButton image_button;
     Button createUser;
 
+    private Toolbar mTopToolbar;
+
     int REQUEST_CODE = 1;
 
     private static final String TAG = "CreateAccountActivity";
 
     private static String name;
+    ProgressDialog dialog;
     private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
@@ -63,6 +67,13 @@ public class CreateAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        mTopToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(mTopToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        dialog = new ProgressDialog(CreateAccountActivity.this);
 
         et1 = findViewById(R.id.create_username);
         et2 = findViewById(R.id.create_password);
@@ -101,13 +112,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
     public void onClickValidation(View v) {
         if (createUser.isEnabled()) {
             if (usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
@@ -126,9 +130,21 @@ public class CreateAccountActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(CreateAccountActivity.this, "Account Created!", Toast.LENGTH_SHORT).show();
-                                Intent create_intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
-                                startActivity(create_intent);
+                                dialog.setMessage("Creating Account...");
+                                dialog.show();
+
+                                new CountDownTimer(3000, 1000) {
+
+                                    public void onTick(long millisUntilFinished) {
+                                        // You don't need anything here
+                                    }
+
+                                    public void onFinish() {
+                                        dialog.dismiss();
+                                        Intent loginIntent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                                        startActivity(loginIntent);
+                                    }
+                                }.start();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
