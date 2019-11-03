@@ -51,4 +51,9 @@
     <string name="bluetooth">bluetooth</string>
     <string name="turn_on">Turn ON</string>
     <string name="turn_off">Turn OFF</string>
+    <string name="space">Field cannot take spaces</string>
+    <string name="username_taken">Username already exists</string>
+    <string name="step_goal">/200</string>
+    <string name="techboys_logo">TechBoys logo</string>
+    <string name="running_icon">Running icon</string>
 </resources>

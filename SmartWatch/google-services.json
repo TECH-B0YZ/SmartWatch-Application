@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "98312853672",
+    "firebase_url": "https://smartwatch-e1b86.firebaseio.com",
+    "project_id": "smartwatch-e1b86",
+    "storage_bucket": "smartwatch-e1b86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98312853672:android:e1dd2dc701f58d6af88a9d",
+        "android_client_info": {
+          "package_name": "smart.watch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98312853672-t0ka34qei7ac0vt11n2f9lb1r3t4ukps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "smart.watch",
+            "certificate_hash": "fb1f74b86b804045325011f24a5ea74c4316fc27"
+          }
+        },
+        {
+          "client_id": "98312853672-ckmmu5pc3q9f10kmj2qht2jhjf96af5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGwWoPr3Rg_FyIy4fIwCxDwbG9ozqv_4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98312853672-ckmmu5pc3q9f10kmj2qht2jhjf96af5b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

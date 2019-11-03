@@ -3,22 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="20dp"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            app:cardBackgroundColor="@color/colorWhite"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
             app:cardPreventCornerOverlap="true"
@@ -39,11 +36,11 @@
                         android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:layout_gravity="center_horizontal|center_vertical"
                         android:layout_weight="1"
                         android:width="60dp"
                         android:height="60dp"
+                        android:contentDescription="@string/running_icon"
                         android:tint="#000000"
                         app:srcCompat="@drawable/ic_pedometer" />
 
@@ -61,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="/200"
+                        android:text="@string/step_goal"
                         android:textColor="#51000000"
                         android:textSize="12sp" />
 
@@ -82,7 +79,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorWhite"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
             app:cardPreventCornerOverlap="true"
@@ -101,15 +98,15 @@
                 android:id="@+id/goal_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/set_goal"
-                android:layout_gravity="center" />
+                android:text="@string/set_goal" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorWhite"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
             app:cardPreventCornerOverlap="true"
