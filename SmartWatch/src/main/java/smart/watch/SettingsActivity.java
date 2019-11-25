@@ -15,11 +15,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+
 public class SettingsActivity extends AppCompatActivity {
 
     Switch bluetoothOnOff = null;
     private BluetoothAdapter bluetoothadapter;
-    private Toolbar mTopToolbar;
     TextView bluetoothState;
 
     @Override
@@ -27,9 +28,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_settings);
 
-        mTopToolbar = findViewById(R.id.my_toolbar);
+        Toolbar mTopToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         bluetoothState = findViewById(R.id.textView4);
@@ -77,11 +78,11 @@ public class SettingsActivity extends AppCompatActivity {
     private void BluetoothEnable() {
         Intent bluetoothIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(bluetoothIntent, 1);
-        Toast.makeText(getApplicationContext(), "Bluetooth is ON", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.bluetooth_ON), Toast.LENGTH_SHORT).show();
     }
 
     private void BluetoothDisable() {
         bluetoothadapter.disable();
-        Toast.makeText(getApplicationContext(), "Bluetooth is OFF", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.bluetooth_OFF), Toast.LENGTH_SHORT).show();
     }
 }

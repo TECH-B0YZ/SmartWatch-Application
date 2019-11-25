@@ -130,7 +130,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                dialog.setMessage("Creating Account...");
+                                dialog.setMessage(getString(R.string.account_creation));
                                 dialog.show();
 
                                 new CountDownTimer(3000, 1000) {
@@ -150,7 +150,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(CreateAccountActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateAccountActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, e.toString());
                             }
                         });
@@ -165,7 +165,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.picture_selection)), REQUEST_CODE);
     }
 
     @Override
@@ -280,7 +280,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CreateAccountActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateAccountActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
                         Log.d(TAG, e.toString());
                     }
                 });
