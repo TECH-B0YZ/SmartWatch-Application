@@ -56,4 +56,11 @@
     <string name="step_goal">/200</string>
     <string name="techboys_logo">TechBoys logo</string>
     <string name="running_icon">Running icon</string>
+    <string name="no_user">User Not Found!</string>
+    <string name="incorrect_password">Password incorrect!</string>
+    <string name="authentication">Authenticating...</string>
+    <string name="bluetooth_ON">Bluetooth is ON</string>
+    <string name="bluetooth_OFF">Bluetooth is OFF</string>
+    <string name="account_creation">Creating Account...</string>
+    <string name="picture_selection">Select Picture</string>
 </resources>

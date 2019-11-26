@@ -80,11 +80,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String password = documentSnapshot.getString(KEY_PASSWORD);
 
                                         if (!password.equals(userPassword)) {
-                                            Toast.makeText(LoginActivity.this, "Password incorrect!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, getString(R.string.incorrect_password), Toast.LENGTH_SHORT).show();
                                         }
 
                                         if ((name.equals(userName) && password.equals(userPassword))) {
-                                            dialog.setMessage("Authenticating...");
+                                            dialog.setMessage(getString(R.string.authentication));
                                             dialog.show();
 
                                             new CountDownTimer(3000, 1000) {
@@ -101,14 +101,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             }.start();
                                         }
                                     } else {
-                                        Toast.makeText(LoginActivity.this, "User Not Found!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, getString(R.string.no_user), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, e.toString());
                                 }
                             });
