@@ -20,7 +20,7 @@
         app:title="Create Account"
         app:titleTextColor="@color/white" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="675dp"
@@ -38,10 +38,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="118dp"
+            android:layout_marginTop="253dp"
             android:backgroundTint="#7f8280"
             android:contentDescription="@string/placeholder_for_pic"
             android:onClick="onClickPic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_profile_pic" />
 
         <EditText
@@ -49,52 +52,66 @@
             android:layout_width="259dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="253dp"
+            android:layout_marginEnd="77dp"
             android:ems="10"
             android:hint="@string/username"
             android:importantForAutofill="no"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/create_email"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginEnd="77dp"
             android:ems="10"
             android:hint="@string/email"
             android:importantForAutofill="no"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_username" />
 
         <EditText
             android:id="@+id/create_password"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginEnd="77dp"
             android:ems="10"
             android:hint="@string/password"
             android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_email" />
 
         <EditText
             android:id="@+id/confirm_password"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginEnd="77dp"
             android:ems="10"
             android:hint="@string/confirm_password"
             android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_password" />
 
         <Button
             android:id="@+id/create_btn"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="24dp"
+            android:layout_marginEnd="77dp"
             android:backgroundTint="#7f8280"
             android:onClick="onClickValidation"
-            android:text="@string/create_account" />
+            android:text="@string/create_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
