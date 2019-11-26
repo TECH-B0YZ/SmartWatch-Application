@@ -66,8 +66,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.login_btn:
-                final String userName = userNameEditText.getText().toString();
-                final String userPassword = passwordEditText.getText().toString();
+                final String userName = userNameEditText.getText().toString().trim();
+                final String userPassword = passwordEditText.getText().toString().trim();
 
                 try {
                     DocumentReference docRef = db.collection("Login Data").document(userName);

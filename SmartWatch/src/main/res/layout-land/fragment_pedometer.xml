@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:orientation="vertical"
     android:padding="8dp">
 
@@ -12,72 +11,108 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="666dp"
-            android:layout_height="109dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="4dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="4dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal">
 
-                    <ImageView
-                        android:id="@+id/imageView2"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_weight="1"
-                        android:width="60dp"
-                        android:height="60dp"
-                        android:contentDescription="@string/running_icon"
-                        android:tint="#000000"
-                        app:srcCompat="@drawable/ic_pedometer" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/steps"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/steps"
-                        android:textColor="#000000"
-                        android:textSize="11sp" />
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:width="60dp"
+                            android:height="60dp"
+                            android:contentDescription="@string/running_icon"
+                            android:tint="#000000"
+                            app:srcCompat="@drawable/ic_pedometer" />
 
-                    <TextView
-                        android:id="@+id/steps_goal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/step_goal"
-                        android:textColor="#51000000"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/steps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/steps"
+                            android:textColor="#000000"
+                            android:textSize="11sp" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/steps_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/step_goal"
+                            android:textColor="#51000000"
+                            android:textSize="12sp" />
 
-                <com.hookedonplay.decoviewlib.DecoView
-                    android:id="@+id/dynamicArcView"
-                    android:layout_width="105dp"
-                    android:layout_height="match_parent"
-                    app:dv_lineWidth="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    </LinearLayout>
 
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
+                    <com.hookedonplay.decoviewlib.DecoView
+                        android:id="@+id/dynamicArcView"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        app:dv_lineWidth="15dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="4dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <EditText
+                    android:id="@+id/goal_et"
+                    android:layout_width="136dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:hint="@string/enter_goal"
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/goal_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/set_goal" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="654dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
@@ -85,32 +120,16 @@
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 
-            <EditText
-                android:id="@+id/goal_et"
-                android:layout_width="136dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:hint="@string/enter_goal"
-                android:importantForAutofill="no"
-                android:inputType="number" />
-
-            <Button
-                android:id="@+id/goal_btn"
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/set_goal" />
-        </androidx.cardview.widget.CardView>
+                android:layout_height="242dp" />
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
-            android:layout_width="648dp"
-            android:layout_height="136dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>
 
