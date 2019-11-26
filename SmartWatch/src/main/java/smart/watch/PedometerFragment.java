@@ -8,6 +8,7 @@ package smart.watch;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.hardware.Sensor;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,12 +90,12 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             }
         });
 
-        Button btn2 = root.findViewById(R.id.graph_btn);
+        ImageButton btn2 = root.findViewById(R.id.graph_id);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Here we will use the button to view a graph that will display the growth
-                // of steps over a period of time
+                Intent intent = new Intent(getActivity(),GraphActivity.class);
+                startActivity(intent);
             }
         });
 

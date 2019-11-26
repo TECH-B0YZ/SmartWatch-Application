@@ -112,11 +112,11 @@
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 
-            <Button
-                android:id="@+id/graph_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_graph" />
+            <ImageView
+                android:id="@+id/graph_id"
+                android:layout_width="383dp"
+                android:layout_height="152dp"
+                app:srcCompat="@drawable/graph_icon" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
