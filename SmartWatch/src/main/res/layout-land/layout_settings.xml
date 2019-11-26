@@ -13,7 +13,7 @@
         android:elevation="4dp"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Settings"
+        app:title="Bluetooth"
         app:titleTextColor="@color/white" />
 
     <LinearLayout

@@ -69,6 +69,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final String userName = userNameEditText.getText().toString().trim();
                 final String userPassword = passwordEditText.getText().toString().trim();
 
+                if (userName.isEmpty() && !userPassword.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.unEmpty), Toast.LENGTH_SHORT).show();
+                } else if (userPassword.isEmpty() && !userName.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.passEmpty), Toast.LENGTH_SHORT).show();
+                } else if (userPassword.isEmpty() && userName.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.fieldEmpty), Toast.LENGTH_SHORT).show();
+                }
+
                 try {
                     DocumentReference docRef = db.collection("Login Data").document(userName);
                     docRef.get()

@@ -122,7 +122,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
 
         GraphView graph = root.findViewById(R.id.graph);
         mSeries1 = new LineGraphSeries<>(generateData());
-        mSeries1.setColor(Color.BLUE);
+        mSeries1.setColor(Color.GREEN);
         graph.getGridLabelRenderer().setGridColor(Color.BLACK);
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);

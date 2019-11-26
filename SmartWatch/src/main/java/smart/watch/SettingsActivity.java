@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -42,10 +41,10 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     BluetoothEnable();
-                    bluetoothState.setText("On");
+                    bluetoothState.setText(R.string.bON);
                 } else {
                     BluetoothDisable();
-                    bluetoothState.setText("Off");
+                    bluetoothState.setText(R.string.bOFF);
                 }
             }
         });
@@ -78,11 +77,9 @@ public class SettingsActivity extends AppCompatActivity {
     private void BluetoothEnable() {
         Intent bluetoothIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(bluetoothIntent, 1);
-        Toast.makeText(getApplicationContext(), getString(R.string.bluetooth_ON), Toast.LENGTH_SHORT).show();
     }
 
     private void BluetoothDisable() {
         bluetoothadapter.disable();
-        Toast.makeText(getApplicationContext(), getString(R.string.bluetooth_OFF), Toast.LENGTH_SHORT).show();
     }
 }
