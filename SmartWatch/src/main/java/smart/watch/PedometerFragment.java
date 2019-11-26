@@ -7,6 +7,7 @@
 package smart.watch;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -40,6 +41,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class PedometerFragment extends Fragment implements SensorEventListener {
 
@@ -53,6 +55,12 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private float goal = 200;
     private int mSeries1Index;
     private float newPosition;
+
+    private Runnable mTimer1;
+    private Runnable mTimer2;
+    private LineGraphSeries<DataPoint> mSeries1;
+    private LineGraphSeries<DataPoint> mSeries2;
+    private double graph2LastXValue = 5d;
 
     private static final String TAG = "PedometerFragment";
 
@@ -93,30 +101,41 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             }
         });
 
+//        GraphView graph = (GraphView) root.findViewById(R.id.graph);
+//        DataPoint[] points = new DataPoint[100];
+//        for (int i = 0; i < points.length; i++) {
+//            points[i] = new DataPoint(i, i*2);
+//        }
+//        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+//
+//        // set manual X bounds
+//        graph.getViewport().setYAxisBoundsManual(true);
+//        graph.getViewport().setMinY(0);
+//        graph.getViewport().setMaxY(150);
+//
+//        graph.getViewport().setXAxisBoundsManual(true);
+//        graph.getViewport().setMinX(4);
+//        graph.getViewport().setMaxX(100);
+//
+//        // enable scaling and scrolling
+//        //graph.getViewport().setScalable(true);
+//        //graph.getViewport().setScalableY(true);
+//
+//        graph.getViewport().setScrollable(true); // enables horizontal scrolling
+//        //graph.getViewport().setScrollableY(true); // enables vertical scrolling
+//
+//        graph.addSeries(series);
+
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
-        DataPoint[] points = new DataPoint[100];
-        for (int i = 0; i < points.length; i++) {
-            points[i] = new DataPoint(i, i*2);
-        }
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+        mSeries1 = new LineGraphSeries<>(generateData());
+        graph.addSeries(mSeries1);
 
-        // set manual X bounds
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(150);
-
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(4);
-        graph.getViewport().setMaxX(100);
-
-        // enable scaling and scrolling
-        //graph.getViewport().setScalable(true);
-        //graph.getViewport().setScalableY(true);
-
-        graph.getViewport().setScrollable(true); // enables horizontal scrolling
-        //graph.getViewport().setScrollableY(true); // enables vertical scrolling
-
-        graph.addSeries(series);
+        GraphView graph2 = (GraphView) root.findViewById(R.id.graph2);
+        mSeries2 = new LineGraphSeries<>();
+        graph2.addSeries(mSeries2);
+        graph2.getViewport().setXAxisBoundsManual(true);
+        graph2.getViewport().setMinX(0);
+        graph2.getViewport().setMaxX(40);
 
         return root;
     }
@@ -142,10 +161,31 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             Toast.makeText(getContext(), getString(R.string.sensor_not_found),
                     Toast.LENGTH_SHORT).show();
         }
+
+        mTimer1 = new Runnable() {
+            @Override
+            public void run() {
+                mSeries1.resetData(generateData());
+                mHandler.postDelayed(this, 300);
+            }
+        };
+        mHandler.postDelayed(mTimer1, 300);
+
+        mTimer2 = new Runnable() {
+            @Override
+            public void run() {
+                graph2LastXValue += 1d;
+                mSeries2.appendData(new DataPoint(graph2LastXValue, getRandom()), true, 40);
+                mHandler.postDelayed(this, 200);
+            }
+        };
+        mHandler.postDelayed(mTimer2, 1000);
     }
 
     @Override
     public void onPause() {
+        mHandler.removeCallbacks(mTimer1);
+        mHandler.removeCallbacks(mTimer2);
         super.onPause();
         running = false;
     }
@@ -178,4 +218,22 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                 DecoEvent.Builder(newPosition).setIndex(mSeries1Index).build());
     }
 
+    private DataPoint[] generateData() {
+        int count = 30;
+        DataPoint[] values = new DataPoint[count];
+        for (int i=0; i<count; i++) {
+            double x = i;
+            double f = mRand.nextDouble()*0.15+0.3;
+            double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
+            DataPoint v = new DataPoint(x, y);
+            values[i] = v;
+        }
+        return values;
+    }
+
+    double mLastRandom = 2;
+    Random mRand = new Random();
+    private double getRandom() {
+        return mLastRandom += mRand.nextDouble()*0.5 - 0.25;
+    }
 }
