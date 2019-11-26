@@ -35,6 +35,9 @@ import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Objects;
 
@@ -90,14 +93,30 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             }
         });
 
-        ImageButton btn2 = root.findViewById(R.id.graph_id);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),GraphActivity.class);
-                startActivity(intent);
-            }
-        });
+        GraphView graph = (GraphView) root.findViewById(R.id.graph);
+        DataPoint[] points = new DataPoint[100];
+        for (int i = 0; i < points.length; i++) {
+            points[i] = new DataPoint(i, i*2);
+        }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+
+        // set manual X bounds
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(150);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(4);
+        graph.getViewport().setMaxX(100);
+
+        // enable scaling and scrolling
+        //graph.getViewport().setScalable(true);
+        //graph.getViewport().setScalableY(true);
+
+        graph.getViewport().setScrollable(true); // enables horizontal scrolling
+        //graph.getViewport().setScrollableY(true); // enables vertical scrolling
+
+        graph.addSeries(series);
 
         return root;
     }

@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/smart_icon_home"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name=".GraphActivity"></activity>
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".SettingsActivity"
