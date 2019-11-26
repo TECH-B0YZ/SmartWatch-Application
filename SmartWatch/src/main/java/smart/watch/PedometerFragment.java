@@ -59,7 +59,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private Runnable mTimer1;
     private Runnable mTimer2;
     private LineGraphSeries<DataPoint> mSeries1;
-    private LineGraphSeries<DataPoint> mSeries2;
     private double graph2LastXValue = 5d;
 
     private static final String TAG = "PedometerFragment";
@@ -130,13 +129,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         mSeries1 = new LineGraphSeries<>(generateData());
         graph.addSeries(mSeries1);
 
-        GraphView graph2 = (GraphView) root.findViewById(R.id.graph2);
-        mSeries2 = new LineGraphSeries<>();
-        graph2.addSeries(mSeries2);
-        graph2.getViewport().setXAxisBoundsManual(true);
-        graph2.getViewport().setMinX(0);
-        graph2.getViewport().setMaxX(40);
-
         return root;
     }
 
@@ -171,21 +163,11 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         };
         mHandler.postDelayed(mTimer1, 300);
 
-        mTimer2 = new Runnable() {
-            @Override
-            public void run() {
-                graph2LastXValue += 1d;
-                mSeries2.appendData(new DataPoint(graph2LastXValue, getRandom()), true, 40);
-                mHandler.postDelayed(this, 200);
-            }
-        };
-        mHandler.postDelayed(mTimer2, 1000);
     }
 
     @Override
     public void onPause() {
         mHandler.removeCallbacks(mTimer1);
-        mHandler.removeCallbacks(mTimer2);
         super.onPause();
         running = false;
     }
@@ -231,8 +213,8 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         return values;
     }
 
-    double mLastRandom = 2;
-    Random mRand = new Random();
+    private double mLastRandom = 2;
+    private Random mRand = new Random();
     private double getRandom() {
         return mLastRandom += mRand.nextDouble()*0.5 - 0.25;
     }

@@ -112,11 +112,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph2"
-            android:layout_width="wrap_content"
-            android:layout_height="242dp" />
-
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
