@@ -68,4 +68,5 @@
     <string name="unEmpty">"User name is empty!"</string>
     <string name="passEmpty">"Password is empty!"</string>
     <string name="fieldEmpty">"Enter your User name and Password! "</string>
+    <string name="monado">Monado</string>
 </resources>

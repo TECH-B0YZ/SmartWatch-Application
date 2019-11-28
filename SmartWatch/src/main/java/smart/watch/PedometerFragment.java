@@ -218,6 +218,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             double x = i;
             double f = mRand.nextDouble() * 0.15 + 0.3;
             double y = Math.sin(i * f + 2) + mRand.nextDouble() * 0.3;
+            //double y = newPosition;
             DataPoint v = new DataPoint(x, y);
             values[i] = v;
         }
