@@ -160,31 +160,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             et1.setError(getString(R.string.username_taken));
     }
 
-//    public void onClickPic(View v) {
-//        image_button = findViewById(R.id.profilepic_btn);
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, getString(R.string.picture_selection)), REQUEST_CODE);
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null
-//                && data.getData() != null) {
-//            Uri uri = data.getData();
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-//                Bitmap resize = Bitmap.createScaledBitmap(bitmap, 500, 500, false);
-//                image_button.setImageBitmap(resize);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
     public boolean usernameValidate() {
         user = et1.getText().toString();
 

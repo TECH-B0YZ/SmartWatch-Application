@@ -14,6 +14,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,9 +27,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
@@ -37,6 +43,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -53,9 +61,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private int mSeries1Index;
     private float newPosition;
     private Runnable mTimer1;
-    private Runnable mTimer2;
     private LineGraphSeries<DataPoint> mSeries1;
-    private double graph2LastXValue = 5d;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -66,11 +72,23 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private double mLastRandom = 2;
     private Random mRand = new Random();
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference SensorData = db.collection("Login Data");
+    private Map<String, Object> note = new HashMap<>();
+
+    private static final String KEY_STEPS = "Steps";
+    private static final String KEY_NAME = "username";
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_pedometer, container, false);
+
+
+
         tv_steps = root.findViewById(R.id.steps);
         sensorManager = (SensorManager)
                 Objects.requireNonNull(getActivity()).getSystemService(Context.SENSOR_SERVICE);
@@ -95,30 +113,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             }
         });
 
-//        GraphView graph = (GraphView) root.findViewById(R.id.graph);
-//        DataPoint[] points = new DataPoint[100];
-//        for (int i = 0; i < points.length; i++) {
-//            points[i] = new DataPoint(i, i*2);
-//        }
-//        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
-//
-//        // set manual X bounds
-//        graph.getViewport().setYAxisBoundsManual(true);
-//        graph.getViewport().setMinY(0);
-//        graph.getViewport().setMaxY(150);
-//
-//        graph.getViewport().setXAxisBoundsManual(true);
-//        graph.getViewport().setMinX(4);
-//        graph.getViewport().setMaxX(100);
-//
-//        // enable scaling and scrolling
-//        //graph.getViewport().setScalable(true);
-//        //graph.getViewport().setScalableY(true);
-//
-//        graph.getViewport().setScrollable(true); // enables horizontal scrolling
-//        //graph.getViewport().setScrollableY(true); // enables vertical scrolling
-//
-//        graph.addSeries(series);
 
         GraphView graph = root.findViewById(R.id.graph);
         mSeries1 = new LineGraphSeries<>(generateData());
@@ -139,6 +133,21 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         if (running) {
             newPosition = event.values[0];
             tv_steps.setText(String.valueOf(event.values[0]));
+
+            note.put(KEY_STEPS,newPosition);
+            SensorData.document("Monado").update(note).
+                    addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(),"No connection to the Database",Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 
