@@ -65,7 +65,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private float newPosition;
     private Runnable mTimer1;
     private LineGraphSeries<DataPoint> mSeries1;
-
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -73,7 +72,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             mHandler.postDelayed(this, 1000);
         }
     };
-    
     private double mLastRandom = 2;
     private Random mRand = new Random();
 
@@ -88,6 +86,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_pedometer, container, false);
+
 
 
         tv_steps = root.findViewById(R.id.steps);
@@ -113,19 +112,20 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                 }
             }
         });
-        Calendar calendar = Calendar.getInstance();
-        Date d1 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d2 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d3 = calendar.getTime();
+//        Calendar calendar = Calendar.getInstance();
+//        Date d1 = calendar.getTime();
+//        calendar.add(Calendar.DATE, 1);
+//        Date d2 = calendar.getTime();
+//        calendar.add(Calendar.DATE, 1);
+//        Date d3 = calendar.getTime();
+
 
 
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
-        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[]{
-                new DataPoint((Date) calendar.getTime(), -2),
-                new DataPoint((Date) calendar.getTime(), 1),
-                new DataPoint((Date) calendar.getTime(), 3)
+        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[] {
+                new DataPoint(1, 7),
+                new DataPoint(2, 1),
+                new DataPoint(3, 3)
         });
         graph.addSeries(series);
         graph.getGridLabelRenderer().setGridColor(Color.BLACK);
@@ -140,12 +140,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         graph.getGridLabelRenderer().reloadStyles();
         series.setShape(PointsGraphSeries.Shape.POINT);
 
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
-
-        graph.getViewport().setMinX(d1.getTime());
-        graph.getViewport().setMaxX(d3.getTime());
-        graph.getViewport().setXAxisBoundsManual(true);
 
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
@@ -170,7 +164,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             newPosition = event.values[0];
             tv_steps.setText(String.valueOf(event.values[0]));
 
-            note.put(KEY_STEPS, newPosition);
+            note.put(KEY_STEPS,newPosition);
             SensorData.document("Monado").update(note).
                     addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -181,7 +175,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.no_connection),Toast.LENGTH_SHORT).show();
                         }
                     });
         }
