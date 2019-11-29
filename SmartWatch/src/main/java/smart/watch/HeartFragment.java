@@ -58,7 +58,7 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
 
                 startTask();
 
-                int num = random.nextInt(12) + 60;
+                int num = random.nextInt(25) + 60;
 
                 hb.setText(String.valueOf(num));
 

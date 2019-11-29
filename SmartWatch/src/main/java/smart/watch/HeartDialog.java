@@ -12,6 +12,8 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import java.util.Objects;
+
 public class HeartDialog extends AppCompatDialogFragment {
 
     private EditText editTextAlert;
