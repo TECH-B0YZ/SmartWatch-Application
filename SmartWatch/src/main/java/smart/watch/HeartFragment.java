@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -33,8 +34,8 @@ public class HeartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_heart, container, false);
 
-        //final TextView hb = (TextView)root.findViewById(R.id.textView5);
-        final int random = new Random().nextInt(12) + 80;
+        final TextView hb = (TextView)root.findViewById(R.id.textView3);
+        final Random random = new Random();
 
         this.handlerAnimationCIMG = new Handler();
         this.layoutHB = root.findViewById(R.id.layoutBeat);
@@ -51,7 +52,9 @@ public class HeartFragment extends Fragment {
 
                 startTask();
 
-                //hb.setText(String.valueOf(random));
+                int num = random.nextInt(12) + 60;
+
+                hb.setText(String.valueOf(num));
 
 
             }
@@ -61,7 +64,7 @@ public class HeartFragment extends Fragment {
             public void onClick(View view) {
 
                 stopTask();
-                //hb.setText("0");
+                hb.setText("0");
 
             }
         });
