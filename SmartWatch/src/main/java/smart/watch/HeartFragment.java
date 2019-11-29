@@ -11,10 +11,13 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -22,11 +25,13 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.Random;
 
-public class HeartFragment extends Fragment {
+public class HeartFragment extends DialogFragment implements HeartDialog.HeartDialogListener {
 
     private View layoutHB;
     private ImageView heartImage, heartBeat, heartBeat1;
     private Handler handlerAnimationCIMG;
+    private TextView textViewAlert;
+
 
 
     @Nullable
@@ -35,6 +40,7 @@ public class HeartFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_heart, container, false);
 
         final TextView hb = (TextView)root.findViewById(R.id.textView3);
+        textViewAlert = (TextView) root.findViewById(R.id.textView5);
         final Random random = new Random();
 
         this.handlerAnimationCIMG = new Handler();
@@ -68,6 +74,17 @@ public class HeartFragment extends Fragment {
 
             }
         });
+
+        root.findViewById(R.id.hr_set_alarm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                openDialog();
+
+
+            }
+        });
+
         return root;
     }
 
@@ -108,6 +125,17 @@ public class HeartFragment extends Fragment {
             handlerAnimationCIMG.postDelayed(runnableAnim, 1500);
         }
     };
+
+    public void openDialog() {
+        HeartDialog exampleDialog = new HeartDialog();
+        exampleDialog.show(getActivity().getSupportFragmentManager(), "example dialog");
+    }
+
+    @Override
+    public void applyTexts(String username) {
+        textViewAlert.setText(username);
+
+    }
 
 
 }
