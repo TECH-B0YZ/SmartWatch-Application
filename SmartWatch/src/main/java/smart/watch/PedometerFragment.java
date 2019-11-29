@@ -112,20 +112,20 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                 }
             }
         });
-        Calendar calendar = Calendar.getInstance();
-        Date d1 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d2 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d3 = calendar.getTime();
+//        Calendar calendar = Calendar.getInstance();
+//        Date d1 = calendar.getTime();
+//        calendar.add(Calendar.DATE, 1);
+//        Date d2 = calendar.getTime();
+//        calendar.add(Calendar.DATE, 1);
+//        Date d3 = calendar.getTime();
 
 
 
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
         PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[] {
-                new DataPoint((Date)calendar.getTime(), -2),
-                new DataPoint((Date)calendar.getTime(), 1),
-                new DataPoint((Date)calendar.getTime(), 3)
+                new DataPoint(1, 7),
+                new DataPoint(2, 1),
+                new DataPoint(3, 3)
         });
         graph.addSeries(series);
         graph.getGridLabelRenderer().setGridColor(Color.BLACK);
@@ -140,12 +140,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         graph.getGridLabelRenderer().reloadStyles();
         series.setShape(PointsGraphSeries.Shape.POINT);
 
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
-
-        graph.getViewport().setMinX(d1.getTime());
-        graph.getViewport().setMaxX(d3.getTime());
-        graph.getViewport().setXAxisBoundsManual(true);
 
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
