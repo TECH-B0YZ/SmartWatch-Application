@@ -29,7 +29,6 @@ public class HomeFragment extends Fragment {
         tv=root.findViewById(R.id.homeFuserName);
         tv.setText(Objects.requireNonNull(myActivity).getUsername());
 
-
         return root;
     }
 }

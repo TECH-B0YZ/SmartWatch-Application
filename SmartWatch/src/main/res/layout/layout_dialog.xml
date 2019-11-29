@@ -10,6 +10,4 @@
         android:layout_height="wrap_content"
         android:hint="Enter Alert" />
 
-
-
 </RelativeLayout>
