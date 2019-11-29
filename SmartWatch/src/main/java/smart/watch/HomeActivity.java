@@ -21,9 +21,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements DataProvider {
 
     private Toolbar mTopToolbar;
+    String KEY_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        KEY_NAME = getIntent().getStringExtra("username");
 
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
@@ -88,4 +91,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    public String getUsername(){
+        return KEY_NAME;
+    }
 }
