@@ -14,7 +14,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -40,9 +39,13 @@ import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -57,7 +60,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private DecoView mDecoView;
     private Handler mHandler = new Handler();
     private boolean running = false;
-    private float goal = 200;
+    private float goal = 500;
     private int mSeries1Index;
     private float newPosition;
     private Runnable mTimer1;
@@ -77,9 +80,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private Map<String, Object> note = new HashMap<>();
 
     private static final String KEY_STEPS = "Steps";
-    private static final String KEY_NAME = "username";
-
-
 
     @Nullable
     @Override
@@ -112,18 +112,48 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                 }
             }
         });
+//        Calendar calendar = Calendar.getInstance();
+//        Date d1 = calendar.getTime();
+//        calendar.add(Calendar.DATE, 1);
+//        Date d2 = calendar.getTime();
+//        calendar.add(Calendar.DATE, 1);
+//        Date d3 = calendar.getTime();
 
 
-        GraphView graph = root.findViewById(R.id.graph);
-        mSeries1 = new LineGraphSeries<>(generateData());
-        mSeries1.setColor(Color.GREEN);
+
+        GraphView graph = (GraphView) root.findViewById(R.id.graph);
+        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[] {
+                new DataPoint(1, 7),
+                new DataPoint(2, 1),
+                new DataPoint(3, 3)
+        });
+        graph.addSeries(series);
         graph.getGridLabelRenderer().setGridColor(Color.BLACK);
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().reloadStyles();
-        graph.addSeries(mSeries1);
+        series.setShape(PointsGraphSeries.Shape.POINT);
+
+
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScalableY(true);
+
+//        GraphView graph = root.findViewById(R.id.graph);
+//        mSeries1 = new LineGraphSeries<>(generateData());
+//        mSeries1.setColor(Color.GREEN);
+//        graph.getGridLabelRenderer().setGridColor(Color.BLACK);
+//        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
+//        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
+//        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
+//        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
+//        graph.getGridLabelRenderer().reloadStyles();
+//        graph.addSeries(mSeries1);
 
         return root;
     }
@@ -145,7 +175,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(),"No connection to the Database",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.no_connection),Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -168,7 +198,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         mTimer1 = new Runnable() {
             @Override
             public void run() {
-                mSeries1.resetData(generateData());
+                //mSeries1.resetData(generateData());
                 mHandler.postDelayed(this, 300);
             }
         };
@@ -218,6 +248,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             double x = i;
             double f = mRand.nextDouble() * 0.15 + 0.3;
             double y = Math.sin(i * f + 2) + mRand.nextDouble() * 0.3;
+            //double y = newPosition;
             DataPoint v = new DataPoint(x, y);
             values[i] = v;
         }

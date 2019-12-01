@@ -27,13 +27,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     Context context = this;
     EditText userNameEditText, passwordEditText;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_PASSWORD = "password";
+    String username;
 
     private static final String TAG = "LoginActivity";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -53,6 +54,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         userNameEditText = findViewById(R.id.login_username);
         passwordEditText = findViewById(R.id.login_password);
+
+        username = userNameEditText.getText().toString();
 
         dialog = new ProgressDialog(LoginActivity.this);
     }
@@ -104,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 public void onFinish() {
                                                     dialog.dismiss();
                                                     Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                    loginIntent.putExtra("username",getUsername());
                                                     startActivity(loginIntent);
                                                 }
                                             }.start();
@@ -148,5 +152,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
         alertDialogBuilder.show();
+    }
+
+    public String getUsername(){
+        return KEY_NAME;
     }
 }
