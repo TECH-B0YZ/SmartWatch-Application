@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -27,14 +28,16 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String EMAIL = "email";
 
     Context context = this;
-    EditText userNameEditText, passwordEditText;
+    EditText emailEditText, passwordEditText;
 
-    private static final String KEY_NAME = "name";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
-    String username;
+    String email, password;
 
     private static final String TAG = "LoginActivity";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,10 +55,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button login_button = findViewById(R.id.login_btn);
         login_button.setOnClickListener(this);
 
-        userNameEditText = findViewById(R.id.login_username);
+        emailEditText = findViewById(R.id.login_email);
         passwordEditText = findViewById(R.id.login_password);
 
-        username = userNameEditText.getText().toString();
+        email = emailEditText.getText().toString();
+        password = passwordEditText.getText().toString();
 
         dialog = new ProgressDialog(LoginActivity.this);
     }
@@ -69,32 +73,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.login_btn:
-                final String userName = userNameEditText.getText().toString().trim();
+                final String userEmail = emailEditText.getText().toString().trim();
                 final String userPassword = passwordEditText.getText().toString().trim();
 
-                if (userName.isEmpty() && !userPassword.isEmpty()) {
+                if (userEmail.isEmpty() && !userPassword.isEmpty()) {
                     Toast.makeText(LoginActivity.this, getString(R.string.unEmpty), Toast.LENGTH_SHORT).show();
-                } else if (userPassword.isEmpty() && !userName.isEmpty()) {
+                } else if (userPassword.isEmpty() && !userEmail.isEmpty()) {
                     Toast.makeText(LoginActivity.this, getString(R.string.passEmpty), Toast.LENGTH_SHORT).show();
-                } else if (userPassword.isEmpty() && userName.isEmpty()) {
+                } else if (userPassword.isEmpty() && userEmail.isEmpty()) {
                     Toast.makeText(LoginActivity.this, getString(R.string.fieldEmpty), Toast.LENGTH_SHORT).show();
                 }
 
                 try {
-                    DocumentReference docRef = db.collection("Login Data").document(userName);
+                    DocumentReference docRef = db.collection("Login Data").document(userEmail);
                     docRef.get()
                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     if (documentSnapshot.exists()) {
-                                        String name = documentSnapshot.getString(KEY_NAME);
-                                        String password = documentSnapshot.getString(KEY_PASSWORD);
+                                        final String email_db = documentSnapshot.getString(KEY_EMAIL);
+                                        String password_db = documentSnapshot.getString(KEY_PASSWORD);
 
-                                        if (!password.equals(userPassword)) {
+                                        if (!password_db.equals(userPassword)) {
                                             Toast.makeText(LoginActivity.this, getString(R.string.incorrect_password), Toast.LENGTH_SHORT).show();
                                         }
 
-                                        if ((name.equals(userName) && password.equals(userPassword))) {
+                                        if ((email_db.equals(userEmail) && password_db.equals(userPassword))) {
                                             dialog.setMessage(getString(R.string.authentication));
                                             dialog.show();
 
@@ -105,9 +109,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 }
 
                                                 public void onFinish() {
+                                                    saveData(email_db);
+
                                                     dialog.dismiss();
+
                                                     Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                                    loginIntent.putExtra("username",getUsername());
                                                     startActivity(loginIntent);
                                                 }
                                             }.start();
@@ -131,6 +137,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    public void saveData(String email) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(EMAIL, email);
+        editor.apply();
+    }
+
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -152,9 +167,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
         alertDialogBuilder.show();
-    }
-
-    public String getUsername(){
-        return KEY_NAME;
     }
 }

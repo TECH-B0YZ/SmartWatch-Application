@@ -1,85 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".CreateAccountActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        style="@style/HeaderBar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Create Account"
-        app:titleTextColor="@color/white" />
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="22dp">
+        tools:context=".CreateAccountActivity">
 
-
-        <EditText
-            android:id="@+id/create_username"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            style="@style/HeaderBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/username"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName" />
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:title="Create Account"
+            app:titleTextColor="@color/white" />
 
-        <EditText
-            android:id="@+id/create_email"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/email"
-            android:importantForAutofill="no"
-            android:inputType="textEmailAddress" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/create_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:hint="@string/password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp">
 
-        <EditText
-            android:id="@+id/confirm_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:hint="@string/confirm_password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/techboys_logo"
+                    android:maxWidth="60dp"
+                    android:maxHeight="60dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/tb_logo3" />
 
-        <Button
-            android:id="@+id/create_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="#7f8280"
-            android:onClick="onClickValidation"
-            android:text="@string/create_account" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#7f8280"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="4dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+
+                        <TextView
+                            android:id="@+id/user_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="@string/user_personal_information"
+                            android:textSize="22sp" />
+
+                        <EditText
+                            android:id="@+id/create_fn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:ems="10"
+                            android:hint="@string/first_name"
+                            android:importantForAutofill="no"
+                            android:inputType="textEmailAddress" />
+
+                        <EditText
+                            android:id="@+id/create_ln"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:ems="10"
+                            android:hint="@string/last_name"
+                            android:importantForAutofill="no"
+                            android:inputType="textEmailAddress" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#7f8280"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="4dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+
+                        <TextView
+                            android:id="@+id/user_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="@string/user_login_information"
+                            android:textSize="22sp" />
+
+                        <EditText
+                            android:id="@+id/create_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:ems="10"
+                            android:hint="@string/email"
+                            android:importantForAutofill="no"
+                            android:inputType="textEmailAddress" />
+
+                        <EditText
+                            android:id="@+id/create_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:ems="10"
+                            android:hint="@string/password"
+                            android:importantForAutofill="no"
+                            android:inputType="textPassword" />
+
+                        <EditText
+                            android:id="@+id/confirm_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:ems="10"
+                            android:hint="@string/confirm_password"
+                            android:importantForAutofill="no"
+                            android:inputType="textPassword" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/create_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="#7f8280"
+                    android:onClick="onClickValidation"
+                    android:text="@string/create_account" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

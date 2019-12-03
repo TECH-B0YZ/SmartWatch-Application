@@ -5,7 +5,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="email">techBoys@email.com</string>
+    <string name="email">Email</string>
     <string name="birth_date">DD/MM/YYYY</string>
     <string name="create_account">Create Account</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -65,9 +65,16 @@
     <string name="picture_selection">Select Picture</string>
     <string name="bON">On</string>
     <string name="bOFF">Off</string>
-    <string name="unEmpty">"User name is empty!"</string>
+    <string name="unEmpty">"Email is empty!"</string>
     <string name="passEmpty">"Password is empty!"</string>
-    <string name="fieldEmpty">"Enter your User name and Password! "</string>
+    <string name="fieldEmpty">"Enter your Email and Password! "</string>
     <string name="monado">Monado</string>
     <string name="no_connection">No connection to the Database</string>
+    <string name="user_login_information">Login Information</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="user_personal_information">Personal Information</string>
+    <string name="battery_percentage">100%</string>
+    <string name="bluetooth_state">On</string>
+    <string name="time_since_last_charged">3h 5m</string>
 </resources>

@@ -6,32 +6,33 @@
 
 package smart.watch;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.Random;
 
-public class HeartFragment extends DialogFragment implements HeartDialog.HeartDialogListener {
+import static android.content.Context.MODE_PRIVATE;
 
+public class HeartFragment extends DialogFragment implements HeartDialog.HeartDialogListener {
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String EMAIL = "email";
+    private String email_sharedPrefs;
     private View layoutHB;
     private ImageView heartImage, heartBeat, heartBeat1;
     private Handler handlerAnimationCIMG;
     private TextView textViewAlert;
-
 
 
     @Nullable
@@ -39,9 +40,10 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_heart, container, false);
 
-        final TextView hb = (TextView)root.findViewById(R.id.textView3);
-        textViewAlert = (TextView) root.findViewById(R.id.textView5);
+        final TextView hb = (TextView) root.findViewById(R.id.textView3);
         final Random random = new Random();
+
+        textViewAlert = (TextView) root.findViewById(R.id.textView5);
 
         this.handlerAnimationCIMG = new Handler();
         this.layoutHB = root.findViewById(R.id.layoutBeat);
@@ -55,33 +57,23 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
         root.findViewById(R.id.hr_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 startTask();
-
                 int num = random.nextInt(25) + 60;
-
                 hb.setText(String.valueOf(num));
-
-
             }
         });
         root.findViewById(R.id.hr_stop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 stopTask();
                 hb.setText("0");
-
             }
         });
 
         root.findViewById(R.id.hr_set_alarm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 openDialog();
-
-
             }
         });
 
@@ -135,6 +127,11 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
     public void applyTexts(String username) {
         textViewAlert.setText(username);
 
+    }
+
+    public void loadEmail() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        email_sharedPrefs = sharedPreferences.getString(EMAIL, "");
     }
 
 

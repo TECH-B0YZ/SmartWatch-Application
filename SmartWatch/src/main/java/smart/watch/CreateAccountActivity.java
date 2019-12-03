@@ -8,11 +8,8 @@ package smart.watch;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,7 +17,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,27 +30,22 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    EditText et1, et2, et3, et4;
-    String email, pass, repass, user;
-    ImageButton image_button;
+    EditText et2, et3, et4, et5, et6;
+    String email, pass, repass, fname, lname;
     Button createUser;
 
     private Toolbar mTopToolbar;
-
-    int REQUEST_CODE = 1;
-
     private static final String TAG = "CreateAccountActivity";
 
-    private static String name;
     ProgressDialog dialog;
-    private static final String KEY_NAME = "name";
+    private static final String KEY_FNAME = "first name";
+    private static final String KEY_LNAME = "last name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
 
@@ -75,13 +66,14 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         dialog = new ProgressDialog(CreateAccountActivity.this);
 
-        et1 = findViewById(R.id.create_username);
         et2 = findViewById(R.id.create_password);
         et3 = findViewById(R.id.create_email);
+        et5 = findViewById(R.id.create_fn);
+        et6 = findViewById(R.id.create_ln);
 
         createUser = findViewById(R.id.create_btn);
 
-        et1.addTextChangedListener(new TextWatcher() {
+        et2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
@@ -103,7 +95,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            userNameCheck();
+                            userEmailCheck();
                         }
 
                     }, DELAY);
@@ -114,19 +106,22 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     public void onClickValidation(View v) {
         if (createUser.isEnabled()) {
-            if (usernameValidate() && passwordValidate() && isValidEmail() && rePasswordValidate()) {
+            if (isValidEmail() && passwordValidate() && rePasswordValidate() && firstNameValidate() && lastNameValidate()) {
 
-                String userName = et1.getText().toString();
                 String email = et3.getText().toString();
                 String password = et2.getText().toString();
+                String firstName = et5.getText().toString();
+                String lastName = et6.getText().toString();
 
                 CollectionReference loginData = db.collection("Login Data");
                 Map<String, Object> note = new HashMap<>();
-                note.put(KEY_NAME, userName);
+
                 note.put(KEY_EMAIL, email);
                 note.put(KEY_PASSWORD, password);
+                note.put(KEY_FNAME, firstName);
+                note.put(KEY_LNAME, lastName);
 
-                loginData.document(userName).set(note)
+                loginData.document(email).set(note)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -157,26 +152,41 @@ public class CreateAccountActivity extends AppCompatActivity {
             } else
                 Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
         } else
-            et1.setError(getString(R.string.username_taken));
+            et2.setError(getString(R.string.username_taken));
     }
 
-    public boolean usernameValidate() {
-        user = et1.getText().toString();
+    public boolean firstNameValidate() {
+        fname = et5.getText().toString();
 
-        if (user.isEmpty()) {
-            et1.setError(getString(R.string.error_empty));
+        if (fname.isEmpty()) {
+            et5.setError(getString(R.string.error_empty));
             return false;
-        } else if (user.length() > 25) {
-            et1.setError(getString(R.string.too_long));
+        } else if (fname.length() < 3) {
+            et5.setError(getString(R.string.too_short));
             return false;
-        } else if (user.length() < 3) {
-            et1.setError(getString(R.string.too_short));
-            return false;
-        } else if (user.contains(" ")) {
-            et1.setError(getString(R.string.space));
+        } else if (fname.contains(" ")) {
+            et5.setError(getString(R.string.space));
             return false;
         } else {
-            et1.setError(null);
+            et5.setError(null);
+            return true;
+        }
+    }
+
+    public boolean lastNameValidate() {
+        lname = et6.getText().toString();
+
+        if (lname.isEmpty()) {
+            et6.setError(getString(R.string.error_empty));
+            return false;
+        } else if (lname.length() < 3) {
+            et6.setError(getString(R.string.too_short));
+            return false;
+        } else if (lname.contains(" ")) {
+            et6.setError(getString(R.string.space));
+            return false;
+        } else {
+            et6.setError(null);
             return true;
         }
     }
@@ -236,16 +246,16 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
-    public void userNameCheck() {
-        String userName = et1.getText().toString();
+    public void userEmailCheck() {
+        String user_email = et2.getText().toString();
 
-        DocumentReference docRef = db.collection("Login Data").document(userName);
+        DocumentReference docRef = db.collection("Login Data").document(user_email);
         docRef.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            et1.setError(getString(R.string.username_taken));
+                            et2.setError(getString(R.string.username_taken));
                             createUser.setEnabled(false);
                         } else {
                             createUser.setEnabled(true);

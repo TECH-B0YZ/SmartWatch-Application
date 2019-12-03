@@ -8,6 +8,7 @@ package smart.watch;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.hardware.Sensor;
@@ -39,21 +40,24 @@ import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
-public class PedometerFragment extends Fragment implements SensorEventListener {
+import static android.content.Context.MODE_PRIVATE;
 
+public class PedometerFragment extends Fragment implements SensorEventListener {
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String EMAIL = "email";
     private static final String TAG = "PedometerFragment";
+    private static final String KEY_STEPS = "steps";
+
+    private String email_sharedPrefs;
     private TextView tv_steps, tv_goal;
     private EditText et;
     private SensorManager sensorManager;
@@ -61,17 +65,13 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private Handler mHandler = new Handler();
     private boolean running = false;
     private float goal = 500;
+
     private int mSeries1Index;
     private float newPosition;
     private Runnable mTimer1;
     private LineGraphSeries<DataPoint> mSeries1;
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            update();
-            mHandler.postDelayed(this, 1000);
-        }
-    };
+
+
     private double mLastRandom = 2;
     private Random mRand = new Random();
 
@@ -79,14 +79,19 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private CollectionReference SensorData = db.collection("Login Data");
     private Map<String, Object> note = new HashMap<>();
 
-    private static final String KEY_STEPS = "Steps";
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            update();
+            mHandler.postDelayed(this, 1000);
+        }
+    };
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_pedometer, container, false);
-
 
 
         tv_steps = root.findViewById(R.id.steps);
@@ -120,9 +125,8 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
 //        Date d3 = calendar.getTime();
 
 
-
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
-        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[] {
+        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[]{
                 new DataPoint(1, 7),
                 new DataPoint(2, 1),
                 new DataPoint(3, 3)
@@ -161,21 +165,23 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (running) {
+            loadEmail();
             newPosition = event.values[0];
-            tv_steps.setText(String.valueOf(event.values[0]));
+            final String stepSend = String.valueOf(newPosition);
+            final String stepsTrimmed = stepSend.substring(0, stepSend.length() - 2);
+            tv_steps.setText(stepsTrimmed);
 
-            note.put(KEY_STEPS,newPosition);
-            SensorData.document("Monado").update(note).
+            SensorData.document(loadEmail()).update(note).
                     addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-
+                            note.put(KEY_STEPS, stepsTrimmed);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(), getString(R.string.no_connection),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -248,11 +254,18 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             double x = i;
             double f = mRand.nextDouble() * 0.15 + 0.3;
             double y = Math.sin(i * f + 2) + mRand.nextDouble() * 0.3;
+
             //double y = newPosition;
             DataPoint v = new DataPoint(x, y);
             values[i] = v;
         }
         return values;
+    }
+
+    public String loadEmail() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        email_sharedPrefs = sharedPreferences.getString(EMAIL, "");
+        return email_sharedPrefs;
     }
 
     private double getRandom() {
