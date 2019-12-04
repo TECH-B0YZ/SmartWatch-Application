@@ -48,6 +48,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private static final String KEY_LNAME = "last name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_STEPS = "steps";
+    private static final String KEY_HB = "heart rate";
 
     private Timer timer = new Timer();
     private final long DELAY = 1000;
@@ -120,6 +122,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 note.put(KEY_PASSWORD, password);
                 note.put(KEY_FNAME, firstName);
                 note.put(KEY_LNAME, lastName);
+                note.put(KEY_STEPS, "0");
+                note.put(KEY_HB, "0");
 
                 loginData.document(email).set(note)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

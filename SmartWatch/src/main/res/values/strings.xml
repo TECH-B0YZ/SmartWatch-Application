@@ -34,6 +34,7 @@
     <string name="no">No</string>
     <string name="warning">Warning</string>
     <string name="err_yes">Are you sure you want to leave the app?</string>
+    <string name="logout">Are you sure you want to Log out?</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="not_equal">This field isn\'t equal to the above one</string>
     <string name="placeholder_for_user_image">Placeholder for user image</string>
@@ -57,6 +58,7 @@
     <string name="techboys_logo">TechBoys logo</string>
     <string name="running_icon">Running icon</string>
     <string name="no_user">User Not Found!</string>
+    <string name="password_change">Password Changed!</string>
     <string name="incorrect_password">Password incorrect!</string>
     <string name="authentication">Authenticating...</string>
     <string name="bluetooth_ON">Bluetooth is ON</string>

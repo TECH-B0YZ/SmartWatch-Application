@@ -6,12 +6,12 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/nav_favorites"
+        android:id="@+id/nav_heart"
         android:icon="@drawable/ic_heart_rate_monitor"
         android:title="@string/heart_rate" />
 
     <item
-        android:id="@+id/nav_search"
+        android:id="@+id/nav_steps"
         android:icon="@drawable/ic_pedometer"
         android:title="@string/pedometer" />
 

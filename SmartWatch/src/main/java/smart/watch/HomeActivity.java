@@ -6,7 +6,11 @@
 
 package smart.watch;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,8 +26,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String CB_STATE = "checkbox state";
 
     private Toolbar mTopToolbar;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +75,10 @@ public class HomeActivity extends AppCompatActivity {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
                             break;
-                        case R.id.nav_favorites:
+                        case R.id.nav_heart:
                             selectedFragment = new HeartFragment();
                             break;
-                        case R.id.nav_search:
+                        case R.id.nav_steps:
                             selectedFragment = new PedometerFragment();
                             break;
                     }
@@ -82,4 +89,34 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle(getString(R.string.warning));
+        alertDialogBuilder
+                .setMessage(getString(R.string.logout))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        saveCheckBoxState(false);
+                        Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
+                        startActivity(loginIntent);
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialogBuilder.show();
+    }
+
+    public void saveCheckBoxState(boolean state) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(CB_STATE, state);
+        editor.apply();
+    }
 }
