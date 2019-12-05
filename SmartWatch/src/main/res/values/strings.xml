@@ -60,16 +60,22 @@
     <string name="no_user">User Not Found!</string>
     <string name="password_change">Password Changed!</string>
     <string name="incorrect_password">Password incorrect!</string>
+    <string name="incorrect_answer">Incorrect Answer!</string>
     <string name="authentication">Authenticating...</string>
     <string name="bluetooth_ON">Bluetooth is ON</string>
     <string name="bluetooth_OFF">Bluetooth is OFF</string>
     <string name="account_creation">Creating Account...</string>
     <string name="picture_selection">Select Picture</string>
     <string name="bON">On</string>
+    <string name="changing_password">Changing Password</string>
     <string name="bOFF">Off</string>
     <string name="unEmpty">"Email is empty!"</string>
     <string name="passEmpty">"Password is empty!"</string>
+    <string name="passEmpty2">"Re-entered password is empty!"</string>
+    <string name="answEmpty">"Answer is empty!"</string>
     <string name="fieldEmpty">"Enter your Email and Password! "</string>
+    <string name="fieldEmpty2">"Enter your Email and Answer! "</string>
+    <string name="fieldEmpty3">"Password Fields are empty! "</string>
     <string name="monado">Monado</string>
     <string name="no_connection">No connection to the Database</string>
     <string name="user_login_information">Login Information</string>
@@ -79,4 +85,10 @@
     <string name="battery_percentage">100%</string>
     <string name="bluetooth_state">On</string>
     <string name="time_since_last_charged">3h 5m</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="answer_the_security_question">Answer the security question</string>
+    <string name="submit_request">submit request</string>
+    <string name="change_password">change password</string>
+    <string name="re_enter_your_new_password">Re-enter your new password</string>
+    <string name="enter_your_new_password">Enter your new password</string>
 </resources>

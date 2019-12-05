@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,9 +45,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String email, password, saved_email, saved_password;
     EditText emailEditText, passwordEditText;
     boolean saved_checkBoxState;
+    TextView changePassword;
     CheckBox remember_login;
     Context context = this;
     ProgressDialog dialog;
+
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -53,11 +58,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (isTablet()) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         Button register_button = findViewById(R.id.register_btn);
         register_button.setOnClickListener(this);
 
         Button login_button = findViewById(R.id.login_btn);
         login_button.setOnClickListener(this);
+
+        changePassword = findViewById(R.id.change_password);
+        changePassword.setOnClickListener(this);
 
         emailEditText = findViewById(R.id.login_email);
         passwordEditText = findViewById(R.id.login_password);
@@ -77,12 +91,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private boolean isTablet() {
+        return (this.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register_btn:
                 Intent register_intent = new Intent(this, CreateAccountActivity.class);
                 startActivity(register_intent);
+                break;
+
+            case R.id.change_password:
+                Intent change_password_intent = new Intent(this, UserAccountVerification.class);
+                startActivity(change_password_intent);
                 break;
 
             case R.id.login_btn:
@@ -95,63 +120,64 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(LoginActivity.this, getString(R.string.passEmpty), Toast.LENGTH_SHORT).show();
                 } else if (userPassword.isEmpty() && userEmail.isEmpty()) {
                     Toast.makeText(LoginActivity.this, getString(R.string.fieldEmpty), Toast.LENGTH_SHORT).show();
-                }
+                } else if (!userEmail.isEmpty() && !userPassword.isEmpty()) {
 
-                try {
-                    DocumentReference docRef = db.collection("Login Data").document(userEmail);
-                    docRef.get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    if (documentSnapshot.exists()) {
-                                        final String email_db = documentSnapshot.getString(KEY_EMAIL);
-                                        final String password_db = documentSnapshot.getString(KEY_PASSWORD);
+                    try {
+                        DocumentReference docRef = db.collection("Login Data").document(userEmail);
+                        docRef.get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if (documentSnapshot.exists()) {
+                                            final String email_db = documentSnapshot.getString(KEY_EMAIL);
+                                            final String password_db = documentSnapshot.getString(KEY_PASSWORD);
 
-                                        if (!password_db.equals(userPassword)) {
-                                            Toast.makeText(LoginActivity.this, getString(R.string.incorrect_password), Toast.LENGTH_SHORT).show();
-                                        }
+                                            if (!password_db.equals(userPassword)) {
+                                                Toast.makeText(LoginActivity.this, getString(R.string.incorrect_password), Toast.LENGTH_SHORT).show();
+                                            }
 
-                                        if ((email_db.equals(userEmail) && password_db.equals(userPassword))) {
-                                            dialog.setMessage(getString(R.string.authentication));
-                                            dialog.show();
+                                            if ((email_db.equals(userEmail) && password_db.equals(userPassword))) {
+                                                dialog.setMessage(getString(R.string.authentication));
+                                                dialog.show();
 
-                                            new CountDownTimer(3000, 1000) {
+                                                new CountDownTimer(3000, 1000) {
 
-                                                public void onTick(long millisUntilFinished) {
-                                                    // You don't need anything here
-                                                }
-
-                                                public void onFinish() {
-                                                    saveData(email_db);
-                                                    if (remember_login.isChecked()) {
-                                                        rememberLogin(email_db, password_db);
-                                                        saveCheckBoxState(true);
-                                                    } else {
-                                                        saveCheckBoxState(false);
+                                                    public void onTick(long millisUntilFinished) {
+                                                        // You don't need anything here
                                                     }
 
-                                                    dialog.dismiss();
+                                                    public void onFinish() {
+                                                        saveData(email_db);
+                                                        if (remember_login.isChecked()) {
+                                                            rememberLogin(email_db, password_db);
+                                                            saveCheckBoxState(true);
+                                                        } else {
+                                                            saveCheckBoxState(false);
+                                                        }
 
-                                                    Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                                    startActivity(loginIntent);
-                                                }
-                                            }.start();
+                                                        dialog.dismiss();
+
+                                                        Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                        startActivity(loginIntent);
+                                                    }
+                                                }.start();
+                                            }
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, getString(R.string.no_user), Toast.LENGTH_SHORT).show();
                                         }
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, getString(R.string.no_user), Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(LoginActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, e.toString());
-                                }
-                            });
-                    break;
-                } catch (IllegalArgumentException e) {
-                    Log.d(TAG, e.toString());
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(LoginActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, e.toString());
+                                    }
+                                });
+                        break;
+                    } catch (IllegalArgumentException e) {
+                        Log.d(TAG, e.toString());
+                    }
                 }
         }
     }

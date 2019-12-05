@@ -23,6 +23,14 @@
             android:parentActivityName=".LoginActivity"
             android:theme="@style/Theme.Design.NoActionBar" />
         <activity
+            android:name=".UserAccountVerification"
+            android:parentActivityName=".LoginActivity"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name=".ChangePassword"
+            android:parentActivityName=".UserAccountVerification"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>

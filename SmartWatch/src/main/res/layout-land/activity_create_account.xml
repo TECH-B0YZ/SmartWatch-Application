@@ -74,16 +74,23 @@
                             android:text="@string/user_personal_information"
                             android:textSize="22sp" />
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray" />
+
                         <EditText
                             android:id="@+id/create_fn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                             android:ems="10"
                             android:hint="@string/first_name"
                             android:importantForAutofill="no"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress"
+                            android:maxLength="20" />
 
                         <EditText
                             android:id="@+id/create_ln"
@@ -91,10 +98,12 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                             android:ems="10"
                             android:hint="@string/last_name"
                             android:importantForAutofill="no"
-                            android:inputType="textEmailAddress" />
+                            android:inputType="textEmailAddress"
+                            android:maxLength="20" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -121,6 +130,11 @@
                             android:layout_marginBottom="4dp"
                             android:text="@string/user_login_information"
                             android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray" />
 
                         <EditText
                             android:id="@+id/create_email"
@@ -154,6 +168,58 @@
                             android:hint="@string/confirm_password"
                             android:importantForAutofill="no"
                             android:inputType="textPassword" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#7f8280"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="4dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+
+                        <TextView
+                            android:id="@+id/security_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="Security Information"
+                            android:textSize="22sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray" />
+
+                        <TextView
+                            android:id="@+id/s_question"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="What is the name of your first pet?"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/security_question_answer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:ems="10"
+                            android:hint="Answer the security question"
+                            android:importantForAutofill="no"
+                            android:inputType="textEmailAddress" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

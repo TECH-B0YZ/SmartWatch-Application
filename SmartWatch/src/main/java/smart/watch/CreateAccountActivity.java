@@ -8,6 +8,8 @@ package smart.watch;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -36,8 +38,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    EditText et2, et3, et4, et5, et6;
-    String email, pass, repass, fname, lname;
+    EditText et2, et3, et4, et5, et6, et7;
+    String email, pass, repass, fname, lname, pname;
     Button createUser;
 
     private Toolbar mTopToolbar;
@@ -48,6 +50,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private static final String KEY_LNAME = "last name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_SECURITY_QUESTION = "pet name";
     private static final String KEY_STEPS = "steps";
     private static final String KEY_HB = "heart rate";
 
@@ -61,6 +64,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+        if (isTablet()) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         mTopToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -72,6 +81,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         et3 = findViewById(R.id.create_email);
         et5 = findViewById(R.id.create_fn);
         et6 = findViewById(R.id.create_ln);
+        et7 = findViewById(R.id.security_question_answer);
 
         createUser = findViewById(R.id.create_btn);
 
@@ -106,19 +116,27 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isTablet() {
+        return (this.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
     public void onClickValidation(View v) {
         if (createUser.isEnabled()) {
-            if (isValidEmail() && passwordValidate() && rePasswordValidate() && firstNameValidate() && lastNameValidate()) {
+            if (isValidEmail() && passwordValidate() && rePasswordValidate() && firstNameValidate() && lastNameValidate() && petNameValidate()) {
 
                 String email = et3.getText().toString();
                 String password = et2.getText().toString();
                 String firstName = et5.getText().toString();
                 String lastName = et6.getText().toString();
+                String petName = et7.getText().toString();
 
                 CollectionReference loginData = db.collection("Login Data");
                 Map<String, Object> note = new HashMap<>();
 
                 note.put(KEY_EMAIL, email);
+                note.put(KEY_SECURITY_QUESTION, petName);
                 note.put(KEY_PASSWORD, password);
                 note.put(KEY_FNAME, firstName);
                 note.put(KEY_LNAME, lastName);
@@ -191,6 +209,24 @@ public class CreateAccountActivity extends AppCompatActivity {
             return false;
         } else {
             et6.setError(null);
+            return true;
+        }
+    }
+
+    public boolean petNameValidate() {
+        pname = et7.getText().toString();
+
+        if (pname.isEmpty()) {
+            et7.setError(getString(R.string.error_empty));
+            return false;
+        } else if (pname.length() < 3) {
+            et7.setError(getString(R.string.too_short));
+            return false;
+        } else if (pname.contains(" ")) {
+            et7.setError(getString(R.string.space));
+            return false;
+        } else {
+            et7.setError(null);
             return true;
         }
     }

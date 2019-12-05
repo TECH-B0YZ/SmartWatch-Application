@@ -42,7 +42,7 @@
                 android:layout_marginBottom="8dp">
 
                 <EditText
-                    android:id="@+id/login_email"
+                    android:id="@+id/login_email_uav"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
@@ -58,19 +58,13 @@
                 android:layout_marginBottom="8dp">
 
                 <EditText
-                    android:id="@+id/login_password"
+                    android:id="@+id/security_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password"
+                    android:hint="@string/answer_the_security_question"
                     android:importantForAutofill="no"
-                    android:inputType="textPassword" />
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <CheckBox
-                android:id="@+id/remember_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Remember Login" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,43 +72,19 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/login_btn"
+                    android:id="@+id/submit_request"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:backgroundTint="#7f8280"
-                    android:text="@string/login"
+                    android:text="@string/submit_request"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="@+id/login_password"
                     app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
-                <Button
-                    android:id="@+id/register_btn"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#7f8280"
-                    android:text="@string/register"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="@+id/login_password"
-                    app:layout_constraintTop_toBottomOf="@+id/login_password" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/change_password"
-                style="@style/Hyperlink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/forgot_your_password"
-                android:textColor="@color/white" />
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
