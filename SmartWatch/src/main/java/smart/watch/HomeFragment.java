@@ -43,14 +43,19 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
+        return root;
+    }
 
-        tv_name = root.findViewById(R.id.homeFuserName);
-        tv_steps = root.findViewById(R.id.steps_home);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        tv_name = view.findViewById(R.id.homeFuserName);
+        tv_steps = view.findViewById(R.id.steps_home);
 
         loadEmail();
         retrieveData();
 
-        return root;
     }
 
     public String loadEmail() {
@@ -73,7 +78,7 @@ public class HomeFragment extends Fragment {
                                 final String steps = documentSnapshot.getString(KEY_STEPS);
                                 try {
                                     if (steps != null) {
-                                        tv_name.setText(fname + " " + lname);
+                                        tv_name.setText("Welcome, " + fname + " " + lname);
                                         tv_steps.setText(steps);
                                     } else {
                                         tv_steps.setText("0");
