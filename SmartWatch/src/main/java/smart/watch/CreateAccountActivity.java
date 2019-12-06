@@ -1,7 +1,6 @@
 /*
  * Author: TECHB0YS
  * Project: SmartWatch
- *
  */
 
 package smart.watch;

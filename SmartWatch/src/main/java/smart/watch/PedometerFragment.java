@@ -1,7 +1,6 @@
 /*
  * Author: TECHB0YS
  * Project: SmartWatch
- *
  */
 
 package smart.watch;
@@ -117,13 +116,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                 }
             }
         });
-//        Calendar calendar = Calendar.getInstance();
-//        Date d1 = calendar.getTime();
-//        calendar.add(Calendar.DATE, 1);
-//        Date d2 = calendar.getTime();
-//        calendar.add(Calendar.DATE, 1);
-//        Date d3 = calendar.getTime();
-
 
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
         PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[]{
@@ -147,17 +139,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
 
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
-
-//        GraphView graph = root.findViewById(R.id.graph);
-//        mSeries1 = new LineGraphSeries<>(generateData());
-//        mSeries1.setColor(Color.GREEN);
-//        graph.getGridLabelRenderer().setGridColor(Color.BLACK);
-//        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
-//        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
-//        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
-//        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
-//        graph.getGridLabelRenderer().reloadStyles();
-//        graph.addSeries(mSeries1);
 
         return root;
     }

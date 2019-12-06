@@ -1,7 +1,6 @@
 /*
  * Author: TECHB0YS
  * Project: SmartWatch
- *
  */
 
 package smart.watch;
@@ -66,7 +65,7 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
             @Override
             public void onClick(View view) {
                 stopTask();
-                hb.setText("0");
+                hb.setText(getString(R.string.zero));
             }
         });
 

@@ -1,3 +1,7 @@
+/*
+ * Author: TECHB0YS
+ * Project: SmartWatch
+ */
 package smart.watch;
 
 import android.app.Dialog;
@@ -27,14 +31,14 @@ public class HeartDialog extends AppCompatDialogFragment {
         editTextAlert = view.findViewById(R.id.edit_alert);
 
         builder.setView(view)
-                .setTitle("Set Alarm")
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.set_alarm))
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 })
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         try {

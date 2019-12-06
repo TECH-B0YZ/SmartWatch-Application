@@ -1,3 +1,7 @@
+/*
+ * Author: TECHB0YS
+ * Project: SmartWatch
+ */
 package smart.watch;
 
 import android.bluetooth.BluetoothAdapter;

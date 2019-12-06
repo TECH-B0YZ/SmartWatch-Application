@@ -91,4 +91,9 @@
     <string name="change_password">change password</string>
     <string name="re_enter_your_new_password">Re-enter your new password</string>
     <string name="enter_your_new_password">Enter your new password</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="cancel">cancel</string>
+    <string name="ok">ok</string>
+    <string name="zero">0</string>
+
 </resources>
