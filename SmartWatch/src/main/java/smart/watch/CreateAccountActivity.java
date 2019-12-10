@@ -84,7 +84,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         createUser = findViewById(R.id.create_btn);
 
-        et2.addTextChangedListener(new TextWatcher() {
+        et3.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
@@ -286,7 +286,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public void userEmailCheck() {
-        String user_email = et2.getText().toString();
+        String user_email = et3.getText().toString();
 
         DocumentReference docRef = db.collection("Login Data").document(user_email);
         docRef.get()
@@ -294,7 +294,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            et2.setError(getString(R.string.username_taken));
+                            et3.setError(getString(R.string.username_taken));
                             createUser.setEnabled(false);
                         } else {
                             createUser.setEnabled(true);
