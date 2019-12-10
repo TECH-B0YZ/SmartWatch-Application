@@ -61,10 +61,10 @@
     <string name="password_change">Password Changed!</string>
     <string name="incorrect_password">Password incorrect!</string>
     <string name="incorrect_answer">Incorrect Answer!</string>
-    <string name="authentication">Authenticating...</string>
+    <string name="authentication">Authenticating…</string>
     <string name="bluetooth_ON">Bluetooth is ON</string>
     <string name="bluetooth_OFF">Bluetooth is OFF</string>
-    <string name="account_creation">Creating Account...</string>
+    <string name="account_creation">Creating Account…</string>
     <string name="picture_selection">Select Picture</string>
     <string name="bON">On</string>
     <string name="welcome">"Welcome, "</string>
@@ -100,5 +100,6 @@
     <string name="last_heart_rate">Last Heart Rate</string>
     <string name="_0_steps">0 steps</string>
     <string name="steps_taken">Steps Taken</string>
+
 
 </resources>
