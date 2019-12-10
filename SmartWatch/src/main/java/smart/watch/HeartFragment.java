@@ -59,7 +59,7 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 int num = random.nextInt(25) + 60;
 
-                String msg = getString(R.string.avghb) + " " + dayOfMonth + "/" + month + "/" + year + ": " + num + getString(R.string.bpm);
+                String msg = getString(R.string.avghb) + " " + dayOfMonth + "/" + (month+1) + "/" + year + ": " + num + getString(R.string.bpm);
 
                 Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
 
