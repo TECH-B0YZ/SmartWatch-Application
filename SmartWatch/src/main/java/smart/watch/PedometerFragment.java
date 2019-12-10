@@ -39,6 +39,8 @@ import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
@@ -117,13 +119,25 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             }
         });
 
+
         GraphView graph = (GraphView) root.findViewById(R.id.graph);
-        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(new DataPoint[]{
-                new DataPoint(1, 7),
-                new DataPoint(2, 1),
-                new DataPoint(3, 3)
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, -1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
         });
         graph.addSeries(series);
+
+        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+            @Override
+            public int get(DataPoint data) {
+                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+            }
+        });
+
+        series.setSpacing(50);
         graph.getGridLabelRenderer().setGridColor(Color.BLACK);
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
@@ -134,8 +148,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
         graph.getGridLabelRenderer().reloadStyles();
-        series.setShape(PointsGraphSeries.Shape.POINT);
-
 
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);

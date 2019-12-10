@@ -102,6 +102,9 @@
     <string name="steps_taken">Steps Taken</string>
     <string name="avghb">Average Heart Beat for</string>
     <string name="bpm">bpm</string>
+    <string name="security_information">Security Information</string>
+    <string name="what_is_the_name_of_your_first_pet">What is the name of your first pet?</string>
+    <string name="answer_the_security_question">Answer the security question</string>
 
 
 </resources>

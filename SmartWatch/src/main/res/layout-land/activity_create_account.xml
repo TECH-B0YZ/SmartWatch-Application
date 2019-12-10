@@ -192,7 +192,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:text="Security Information"
+                            android:text="@string/security_information"
                             android:textSize="22sp" />
 
                         <View
@@ -207,7 +207,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
-                            android:text="What is the name of your first pet?"
+                            android:text="@string/what_is_the_name_of_your_first_pet"
                             android:textSize="18sp" />
 
                         <EditText
@@ -217,7 +217,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
                             android:ems="10"
-                            android:hint="Answer the security question"
+                            android:hint="@string/answer_the_security_question"
                             android:importantForAutofill="no"
                             android:inputType="textEmailAddress" />
                     </LinearLayout>
