@@ -100,5 +100,7 @@
     <string name="last_heart_rate">Dernière fréquence cardiaque</string>
     <string name="_0_steps">0 pas</string>
     <string name="steps_taken">Pas marches</string>
+    <string name="avghb">Moyen du Rythme Cardiaque pour</string>
+    <string name="bpm">bpm</string>
 
 </resources>

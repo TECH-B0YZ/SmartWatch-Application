@@ -11,8 +11,10 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -49,6 +51,21 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
         this.heartImage = root.findViewById(R.id.heart_image);
         this.heartBeat = root.findViewById(R.id.heart_beat);
         this.heartBeat1 = root.findViewById(R.id.heart_beat1);
+
+        CalendarView simpleCalendarView = (CalendarView) root.findViewById(R.id.simpleCalendarView);
+
+        simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                int num = random.nextInt(25) + 60;
+
+                String msg = getString(R.string.avghb) + " " + dayOfMonth + "/" + month + "/" + year + ": " + num + getString(R.string.bpm);
+
+                Toast.makeText(getActivity(),msg,Toast.LENGTH_LONG).show();
+
+
+            }
+        });
 
         Glide.with(getActivity().getBaseContext()).load(R.drawable.ic_heart)
                 .apply(new RequestOptions().circleCrop()).into(heartImage);
@@ -123,8 +140,8 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
     }
 
     @Override
-    public void applyTexts(String username) {
-        textViewAlert.setText(username);
+    public void applyTexts(String alert) {
+        textViewAlert.setText(alert);
 
     }
 

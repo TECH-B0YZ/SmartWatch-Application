@@ -93,13 +93,15 @@
     <string name="re_enter_your_new_password">Re-enter your new password</string>
     <string name="enter_your_new_password">Enter your new password</string>
     <string name="set_alarm">Set Alarm</string>
-    <string name="cancel">cancel</string>
-    <string name="ok">ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
     <string name="zero">0</string>
     <string name="_0_bpm">0 bpm</string>
     <string name="last_heart_rate">Last Heart Rate</string>
     <string name="_0_steps">0 steps</string>
     <string name="steps_taken">Steps Taken</string>
+    <string name="avghb">Average Heart Beat for</string>
+    <string name="bpm">bpm</string>
 
 
 </resources>

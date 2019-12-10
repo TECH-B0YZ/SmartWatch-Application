@@ -59,11 +59,11 @@ public class HeartDialog extends AppCompatDialogFragment {
         try {
             listener = (HeartDialogListener) context;
         } catch (ClassCastException e) {
-
+            e.getMessage();
         }
     }
 
     public interface HeartDialogListener {
-        void applyTexts(String username);
+        void applyTexts(String alert);
     }
 }
