@@ -7,6 +7,6 @@
     <color name="colorBackground">#237E8080</color>
     <color name="colorBackgroundLogin">#7f8280</color>
     <color name="black">#000000</color>
-    <color name="red">#F70000</color>
+    <color name="red">#FF0000</color>
     <color name="blue">#003BFF</color>
 </resources>

@@ -6,6 +6,7 @@
 package smart.watch;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
@@ -76,6 +78,19 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
                 startTask();
                 int num = random.nextInt(25) + 60;
                 hb.setText(String.valueOf(num));
+
+                if(num > 70){
+
+
+                    hb.setTextColor(ContextCompat.getColor(root.getContext(), R.color.red));
+                    Toast.makeText(getActivity(),getString(R.string.alert),Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    hb.setTextColor(ContextCompat.getColor(root.getContext(), R.color.black));
+                }
+
+
             }
         });
         root.findViewById(R.id.hr_stop).setOnClickListener(new View.OnClickListener() {
@@ -83,6 +98,7 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
             public void onClick(View view) {
                 stopTask();
                 hb.setText(getString(R.string.zero));
+                hb.setTextColor(ContextCompat.getColor(root.getContext(), R.color.black));
             }
         });
 
@@ -90,6 +106,13 @@ public class HeartFragment extends DialogFragment implements HeartDialog.HeartDi
             @Override
             public void onClick(View view) {
                 openDialog();
+            }
+        });
+
+        root.findViewById(R.id.hr_diagnostic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),getString(R.string.no_connection),Toast.LENGTH_LONG).show();
             }
         });
 

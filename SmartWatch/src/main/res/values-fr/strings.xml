@@ -102,5 +102,10 @@
     <string name="steps_taken">Pas marches</string>
     <string name="avghb">Moyen du Rythme Cardiaque pour</string>
     <string name="bpm">bpm</string>
+    <string name="_ph_bpm">/ 70 bpm</string>
+    <string name="alert">ALERT!</string>
+    <string name="security_information">Information de Securité</string>
+    <string name="what_is_the_name_of_your_first_pet">Quel est le nom de votre premier animal de compagnie?</string>
+
 
 </resources>

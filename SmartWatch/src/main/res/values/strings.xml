@@ -104,7 +104,8 @@
     <string name="bpm">bpm</string>
     <string name="security_information">Security Information</string>
     <string name="what_is_the_name_of_your_first_pet">What is the name of your first pet?</string>
-    <string name="answer_the_security_question">Answer the security question</string>
+    <string name="_ph_bpm">/ 70 bpm</string>
+    <string name="alert">ALERT!</string>
 
 
 </resources>
