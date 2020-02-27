@@ -26,6 +26,10 @@
           <option name="url" value="https://github.com/aqua30/Android-Bluetooth-Low-Energy-Wrapper-BLE" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/Thumar/BatteryMonitor" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="$USER_HOME$/AndroidStudioProjects" />
