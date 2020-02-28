@@ -30,6 +30,10 @@
           <option name="url" value="https://github.com/Thumar/BatteryMonitor" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/NordicSemiconductor/Android-nRF-Blinky" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="$USER_HOME$/AndroidStudioProjects" />
