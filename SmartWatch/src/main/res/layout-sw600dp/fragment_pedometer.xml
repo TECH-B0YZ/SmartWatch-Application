@@ -69,15 +69,6 @@
 
                     </LinearLayout>
 
-                    <com.hookedonplay.decoviewlib.DecoView
-                        android:id="@+id/dynamicArcView"
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
-                        app:dv_lineWidth="15dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
                 </FrameLayout>
             </androidx.cardview.widget.CardView>
 

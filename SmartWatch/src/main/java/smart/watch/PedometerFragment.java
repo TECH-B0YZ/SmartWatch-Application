@@ -111,8 +111,6 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
 
 
         tv_steps = root.findViewById(R.id.steps);
-        mDecoView = root.findViewById(R.id.dynamicArcView);
-        createDataSeries1();
         // Start the timer
         mHandler.post(runnable);
 
@@ -213,28 +211,8 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
-    private void createDataSeries1() {
-        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 0, 255, 0))
-                .setRange(0, goal, 0)
-                .setInitialVisibility(false)
-                .setLineWidth(32f)
-                .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_OUTER,
-                        Color.parseColor("#22000000"), 0.4f))
-                .setInterpolator(new OvershootInterpolator())
-                .setShowPointWhenEmpty(false)
-                .setCapRounded(false)
-                .setInset(new PointF(32f, 32f))
-                .setDrawAsPoint(false)
-                .setSpinClockwise(true)
-                .setSpinDuration(6000)
-                .setChartStyle(SeriesItem.ChartStyle.STYLE_DONUT)
-                .build();
-        mSeries1Index = mDecoView.addSeries(seriesItem1);
-    }
 
     private void update() {
-        mDecoView.addEvent(new
-                DecoEvent.Builder(newPosition).setIndex(mSeries1Index).build());
     }
 
     public String loadEmail() {
@@ -258,7 +236,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         boolean found=false;
         BluetoothAdapter bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
-            //Toast.makeText(,"Device doesnt Support Bluetooth",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Device doesnt Support Bluetooth",Toast.LENGTH_SHORT).show();
         }
         if(!bluetoothAdapter.isEnabled())
         {
@@ -273,7 +251,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         Set<BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
         if(bondedDevices.isEmpty())
         {
-            //Toast.makeText(getApplicationContext(),"Please Pair the Device first",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Please Pair the Device first",Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -341,20 +319,19 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                             handler.post(new Runnable() {
                                 public void run()
                                 {
-                                    tv_steps.append(string);
                                     stepValue = string;
 
-                                    loadEmail();
-                                    //newPosition = Float.valueOf(stepValue);
-                                    final String stepSend = String.valueOf(stepValue);
-                                    final String stepsTrimmed = stepSend.substring(0, stepSend.length() - 2);
-                                    tv_steps.setText(stepsTrimmed);
+                                    Log.i(TAG,"Steps: "+ stepValue);
+                                    //final String stepsTrimmed = stepSend.substring(0, stepSend.length() - 2);
+                                    tv_steps.setText(stepValue);
 
+
+                                    loadEmail();
                                     SensorData.document(loadEmail()).update(note).
                                             addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    note.put(KEY_STEPS, stepsTrimmed);
+                                                    note.put(KEY_STEPS, stepValue);
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
