@@ -9,22 +9,17 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PointF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,14 +34,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hookedonplay.decoviewlib.DecoView;
-import com.hookedonplay.decoviewlib.charts.EdgeDetail;
-import com.hookedonplay.decoviewlib.charts.SeriesItem;
-import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -60,18 +51,15 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     public static final String EMAIL = "email";
     private static final String TAG = "PedometerFragment";
     private static final String KEY_STEPS = "steps";
+    private static final String KEY_BEATS ="heart rate";
 
     private String email_sharedPrefs;
-    private TextView tv_steps, tv_goal;
+    private TextView tv_steps,tv_beats, tv_goal;
     private EditText et;
-    private DecoView mDecoView;
     private Handler mHandler = new Handler();
     private boolean running = false;
     private float goal = 500;
-    private String stepValue;
 
-    private int mSeries1Index;
-    private float newPosition;
     private Runnable mTimer1;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -85,20 +73,15 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
-    Button startButton, sendButton,clearButton,stopButton;
-    TextView textView;
-    EditText editText;
-    boolean deviceConnected=false;
-    //Thread thread;
-    byte buffer[];
-    //int bufferPosition;
-    boolean stopThread;
+    private Button startButton,stopButton;
+    private boolean deviceConnected=false;
+    private byte[] buffer;
+    private boolean stopThread;
 
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            update();
             mHandler.postDelayed(this, 1000);
         }
     };
@@ -111,31 +94,35 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
 
 
         tv_steps = root.findViewById(R.id.steps);
-        mDecoView = root.findViewById(R.id.dynamicArcView);
-        createDataSeries1();
+        tv_beats=root.findViewById(R.id.steps2);
         // Start the timer
         mHandler.post(runnable);
 
         startButton = (Button) root.findViewById(R.id.buttonStart);
+        //Starts the bluetooth connection.
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(BTinit())
+                if(BTinit()) //This will initilize bluetooth which will start looking for the ESP32 device.
                 {
-                    if(BTconnect())
+                    if(BTconnect()) //If connected, the beginListenForData will start working and a toast will appear.
                     {
                         setUiEnabled(true);
                         deviceConnected=true;
                         beginListenForData();
                         Toast.makeText(getActivity(),"ESP32 connected,",Toast.LENGTH_SHORT).show();
+
+
                     }
 
                 }
             }
         });
 
-        stopButton = (Button) root.findViewById(R.id.buttonStop);
 
+
+        stopButton = (Button) root.findViewById(R.id.buttonStop);
+        //Used to stop the bluetooth connection.
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +148,8 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             }
         });
 
+
+        //Consider dropping this
         Button btn1 = root.findViewById(R.id.goal_btn);
         btn1.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("DefaultLocale")
@@ -168,7 +157,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
             public void onClick(View v) {
                 try {
                     et = root.findViewById(R.id.goal_et);
-                    goal = Float.valueOf(et.getText().toString());
+                    goal = Float.parseFloat(et.getText().toString());
                     tv_goal = root.findViewById(R.id.steps_goal);
                     tv_goal.setText(String.format("/%d", (int) goal));
                 } catch (IllegalArgumentException e) {
@@ -176,6 +165,9 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                 }
             }
         });
+
+
+
         return root;
     }
 
@@ -184,6 +176,11 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         if (running) {
 
         }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     @Override
@@ -209,42 +206,15 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         running = false;
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
-
-    private void createDataSeries1() {
-        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 0, 255, 0))
-                .setRange(0, goal, 0)
-                .setInitialVisibility(false)
-                .setLineWidth(32f)
-                .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_OUTER,
-                        Color.parseColor("#22000000"), 0.4f))
-                .setInterpolator(new OvershootInterpolator())
-                .setShowPointWhenEmpty(false)
-                .setCapRounded(false)
-                .setInset(new PointF(32f, 32f))
-                .setDrawAsPoint(false)
-                .setSpinClockwise(true)
-                .setSpinDuration(6000)
-                .setChartStyle(SeriesItem.ChartStyle.STYLE_DONUT)
-                .build();
-        mSeries1Index = mDecoView.addSeries(seriesItem1);
-    }
-
-    private void update() {
-        mDecoView.addEvent(new
-                DecoEvent.Builder(newPosition).setIndex(mSeries1Index).build());
-    }
 
     public String loadEmail() {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         email_sharedPrefs = sharedPreferences.getString(EMAIL, "");
         return email_sharedPrefs;
     }
 
 
-    public void setUiEnabled(boolean bool)
+    private void setUiEnabled(boolean bool)
     {
         //startButton.setEnabled(!bool);
         //sendButton.setEnabled(bool);
@@ -253,12 +223,12 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
 
     }
 
-    public boolean BTinit()
+    private boolean BTinit()
     {
         boolean found=false;
         BluetoothAdapter bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
-            //Toast.makeText(,"Device doesnt Support Bluetooth",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Device doesnt Support Bluetooth",Toast.LENGTH_SHORT).show();
         }
         if(!bluetoothAdapter.isEnabled())
         {
@@ -273,7 +243,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         Set<BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
         if(bondedDevices.isEmpty())
         {
-            //Toast.makeText(getApplicationContext(),"Please Pair the Device first",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Please Pair the Device first",Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -290,7 +260,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         return found;
     }
 
-    public boolean BTconnect()
+    private boolean BTconnect()
     {
         boolean connected=true;
         try {
@@ -319,7 +289,7 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
         return connected;
     }
 
-    void beginListenForData()
+    private void beginListenForData()
     {
         final Handler handler = new Handler();
         stopThread = false;
@@ -336,25 +306,37 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                         if(byteCount > 0)
                         {
                             byte[] rawBytes = new byte[byteCount];
-                            inputStream.read(rawBytes);
+                            final int read = inputStream.read(rawBytes);
                             final String string=new String(rawBytes);
                             handler.post(new Runnable() {
                                 public void run()
                                 {
-                                    tv_steps.append(string);
-                                    stepValue = string;
 
+                                    //This will break up the string into two.
+                                    String[] numbers = string.split(":");
+
+                                    //This will set the strings on the screen.
+                                    tv_steps.setText(numbers[0]);
+                                    tv_beats.setText(numbers[1]);
+
+
+                                    //These will convert the index arrays into strings.(Used for database purposes.)
+                                    final String stepSend = String.valueOf(numbers[0]);
+                                    final String beatSend = String.valueOf(numbers[1]);
+
+                                    //These next two are used for debugging.(Can be seen in logcat.)
+                                    Log.i(TAG,"Step: "+stepSend);
+                                    Log.i(TAG,"H.Beats: "+beatSend);
+
+
+                                    //Setting up Database.
                                     loadEmail();
-                                    //newPosition = Float.valueOf(stepValue);
-                                    final String stepSend = String.valueOf(stepValue);
-                                    final String stepsTrimmed = stepSend.substring(0, stepSend.length() - 2);
-                                    tv_steps.setText(stepsTrimmed);
-
                                     SensorData.document(loadEmail()).update(note).
                                             addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    note.put(KEY_STEPS, stepsTrimmed);
+                                                    note.put(KEY_STEPS, stepSend); // This will send steps to database
+                                                    note.put(KEY_BEATS,beatSend);  // This will send heartbeats to database.
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
@@ -363,10 +345,16 @@ public class PedometerFragment extends Fragment implements SensorEventListener {
                                                     Toast.makeText(getContext(), getString(R.string.no_connection), Toast.LENGTH_SHORT).show();
                                                 }
                                             });
+
+
                                 }
                             });
 
+
+
                         }
+
+
                     }
                     catch (IOException ex)
                     {
