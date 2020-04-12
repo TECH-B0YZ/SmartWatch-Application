@@ -13,12 +13,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="174dp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="6dp"
@@ -32,15 +32,71 @@
                     android:layout_gravity="center_horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="141dp"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView23"
+                            android:layout_width="79dp"
+                            android:layout_height="82dp"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_weight="1"
+                            android:width="60dp"
+                            android:height="60dp"
+                            android:contentDescription="@string/running_icon"
+                            android:tint="#000000"
+                            app:srcCompat="@drawable/ic_heart" />
+
+                        <TextView
+                            android:id="@+id/steps2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/heart_rate"
+                            android:textColor="#000000"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@+id/steps_goal2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/bpm"
+                            android:textColor="#51000000"
+                            android:textSize="22sp" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="4dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="117dp"
+                        android:layout_height="141dp"
                         android:layout_gravity="center_horizontal|center_vertical"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/imageView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="64dp"
+                            android:layout_height="82dp"
                             android:layout_gravity="center_horizontal|center_vertical"
                             android:layout_weight="1"
                             android:width="60dp"
@@ -63,9 +119,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/step_goal"
+                            android:text="@string/steps"
                             android:textColor="#51000000"
-                            android:textSize="12sp" />
+                            android:textSize="22sp" />
 
                     </LinearLayout>
 
@@ -73,48 +129,11 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="4dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <EditText
-                        android:id="@+id/goal_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/black"
-                        android:hint="@string/enter_goal"
-                        android:importantForAutofill="no"
-                        android:inputType="number"
-                        android:textColor="@color/black" />
-
-                    <Button
-                        android:id="@+id/goal_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/set_goal" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="108dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
             app:cardElevation="4dp"
@@ -128,25 +147,24 @@
 
                 <Button
                     android:id="@+id/buttonStart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Start"
-                    android:onClick="onClickStart"/>
+                    android:layout_width="192dp"
+                    android:layout_height="91dp"
+                    android:onClick="onClickStart"
+                    android:text="Start" />
 
                 <Button
                     android:id="@+id/buttonStop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Stop"
-                    android:onClick="onClickStop"/>
+                    android:layout_width="187dp"
+                    android:layout_height="match_parent"
+                    android:onClick="onClickStop"
+                    android:text="Stop" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
-
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
@@ -154,51 +172,35 @@
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/goal_et"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:backgroundTint="@color/black"
+                    android:hint="@string/enter_goal"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:textColor="@color/black" />
 
-                    <ImageView
-                        android:id="@+id/imageView23"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_weight="1"
-                        android:width="60dp"
-                        android:height="60dp"
-                        android:contentDescription="@string/running_icon"
-                        android:tint="#000000"
-                        app:srcCompat="@drawable/ic_pedometer" />
-
-                    <TextView
-                        android:id="@+id/steps2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/steps"
-                        android:textColor="#000000"
-                        android:textSize="11sp" />
-
-                    <TextView
-                        android:id="@+id/steps_goal2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/step_goal"
-                        android:textColor="#51000000"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </FrameLayout>
+                <Button
+                    android:id="@+id/goal_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/set_goal" />
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+
     </LinearLayout>
 </ScrollView>
 
